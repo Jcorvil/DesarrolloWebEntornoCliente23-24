@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
     <script>
-        function factorial(){
+        function factorial() {
             var num1 = Number(prompt("Introduzca un número para calcular su factorial"));
             var resultado = 1;
+            var mensaje = "";
 
-            if(num1 != Number){
-                for (i = num1; i >= 1; i--){
-                    resultado = resultado * i;
+            if (isNaN(num1)) {
+                mensaje = "Introduzca un número válido";
+            } else {
+                for (i = num1; i >= 1; i--) {
+                    resultado *= i;
                 }
                 mensaje = "El factorial de " + num1 + " es " + resultado;
-            } else {
-                mensaje = "Introduzca un número válido"
             }
             alert(mensaje);
-
         }
     </script>
     <body onload="factorial()"></body>

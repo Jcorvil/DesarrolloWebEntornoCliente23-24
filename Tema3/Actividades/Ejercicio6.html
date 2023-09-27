@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    function ecuacion2grado() {
+      var a = Number(prompt("Introduzca el coeficiente a"));
+      var b = Number(prompt("Introduzca el coeficiente b"));
+      var c = Number(prompt("Introduzca el coeficiente c"));
+      var mensaje = "";
+      var x1 = 0;
+      var x2 = 0;
+
+      discriminador = b * b - 4 * a * c;
+
+      if (discriminador < 0) {
+        mensaje = "No es posible realizar la operación. El discriminador es negativo.";
+      } else if (discriminador >= 0 && a >= 1) {
+        x1 = (-b + Math.sqrt(discriminador)) / (2 * a); <!-- Math.sqrt() permite hacer la raiz cuadrada de lo que tenga entre paréntesis -->
+        x2 = (-b - Math.sqrt(discriminador)) / (2 * a);
+
+        mensaje = "El valor de x1 es " + x1 + ". El valor de x2 es " + x2;
+      } else if (a == 0) {
+        mensaje = "El valor de 'a' no puede ser 0";
+      } else {
+        mensaje = "Introduzca valores correctos.";
+      }
+
+      alert(mensaje);
+    }
+  </script>
+  <body onload="ecuacion2grado()"></body>
+</html>

@@ -4,14 +4,17 @@
         function descFactoresPrimos(){
             var num1 = Number(prompt("Introduzca un número para descomponer en números primos"));
             var divisor = 2;
+            var resultado = "";
 
             while (num1 > 1) {
                 if (num1 % divisor == 0){
-                    
+                    resultado = divisor % num1 
+                } else {
+                    divisor++;
                 }
             }
 
-            alert(mensaje);
+            alert(resultado);
 
         }
     </script>
