@@ -13,7 +13,7 @@
 
       if (discriminador < 0) {
         mensaje = "No es posible realizar la operación. El discriminador es negativo.";
-      } else if (discriminador >= 0 && a >= 1) {
+      } else if (discriminador >= 0 && a != 0) {
         x1 = (-b + Math.sqrt(discriminador)) / (2 * a); <!-- Math.sqrt() permite hacer la raiz cuadrada de lo que tenga entre paréntesis -->
         x2 = (-b - Math.sqrt(discriminador)) / (2 * a);
 

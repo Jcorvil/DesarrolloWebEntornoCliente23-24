@@ -5,16 +5,22 @@
             var num1 = Number(prompt("Introduzca un número para descomponer en números primos"));
             var divisor = 2;
             var resultado = "";
+            var num1inicio = num1;
 
-            while (num1 > 1) {
-                if (num1 % divisor == 0){
-                    resultado = divisor % num1 
+            while (num1 != 1) {
+                if ((num1 % divisor) == 0){
+                    if ((num1 / divisor) != 1){
+                        resultado += divisor + " * ";
+                    } else {
+                        resultado += divisor;
+                    }
+                    num1 = num1 / divisor;
                 } else {
                     divisor++;
                 }
             }
 
-            alert(resultado);
+            alert("Los factores primos de " + num1inicio + " son: " + resultado);
 
         }
     </script>
