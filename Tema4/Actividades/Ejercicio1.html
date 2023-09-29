@@ -1,30 +1,103 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8" />
         <script>
-            function menu(){
-                var opcion = Number(prompt("Escoja una opción: \n 1.Elija cubo, esfera o cilindro. \n 2.Introduzca los valores de las variables \n 3.Cálculo de columen. \n 4.Cálculo del área \n 5.Finalizar"));
-                
+            function menu() {
+                var opcion = 0;
+                var lado = 0;
+                var altura = 0;
+                var radio = 0;
+
+                while (true) {
+                    var opcionMenu = Number(
+                        prompt(
+                            "Escoja una opción:\n 1.Elija cubo, esfera o cilindro." +
+                                "\n 2.Introduzca los valores de las variables \n " +
+                                "3.Cálculo de volumen. \n 4.Cálculo del área \n 5.Finalizar"
+                        )
+                    );
+
+                    if (opcionMenu == 1) {
+                        opcion = figGeometricas();
+                    } else if (opcionMenu == 2) {
+                       [lado, radio, altura] = valoresVariables(opcion);
+                    } else if (opcionMenu == 3) {
+                        calculoVolumen(opcion, lado, altura, radio);
+                    } else if (opcionMenu == 4) {
+                        calculoArea(opcion, lado, altura, radio);
+                    } else {
+                        break;
+                    }
+                }
             }
 
-            function figGeometricas (){
-
+            function figGeometricas() {
+                var opcion = Number(
+                    prompt(" 1. Cubo \n 2. Esfera \n 3. Cilindro")
+                );
+                switch (opcion) {
+                    case 1:
+                        alert("Ha elegido el cubo");
+                        break;
+                    case 2:
+                        alert("Ha elegido la esfera");
+                        break;
+                    case 3:
+                        alert("Ha elegido el cilindro");
+                        break;
+                    default:
+                        alert("Escoja una de las tres opciones");
+                        figGeometricas();
+                }
+                return opcion;
             }
 
-            function valoresVariables(){
 
+            function valoresVariables(opcion) {
+                if (opcion == 1) {
+                    var lado = Number(prompt("Introduzca el lado del cubo"));
+                } else if (opcion == 2) {
+                    var radio = Number(prompt("Introduzca el radio de la esfera"));
+                } else if (opcion == 3) {
+                    var radio = Number(prompt("Introduzca el radio del cilindro"));
+                    var altura = Number(prompt("Introduzca la altura del cilindro"));
+                } else {
+                    alert("Introduzca los valores de la figura escogida");
+                    valoresVariables();
+                }
+                return [lado, altura, radio];
             }
 
-            function calculoVolumen(){
 
+
+            function calculoVolumen(opcion, lado, radio, altura) {
+                if (opcion == 1) {
+                    var volumenCubo = lado * lado * lado;
+                    alert("El volumen del cubo es " + volumenCubo);
+                } else if (opcion == 2) {
+                    var volumenEsfera = (4 * Math.PI * (radio * radio * radio)) / 3;
+                    alert("El volumen de la esfera es " + volumenEsfera);
+                } else if (opcion == 3) {
+                    var volumenCilindro = Math.PI * (radio * radio) * altura;
+                    alert("El volumen del cilindro es " + volumenCilindro);
+                } 
             }
 
-            function calculoArea(){
-
+            function calculoArea(opcion, lado, radio, altura) {
+                if (opcion == 1) {
+                    var areaCubo = 6 * lado * lado;
+                    alert("El área del cubo es " + areaCubo);
+                } else if (opcion == 2) {
+                    var areaEsfera = (4 * Math.PI * (radio * radio));
+                    alert("El área de la esfera es " + areaEsfera);
+                } else if (opcion == 3) {
+                    var areaCilindro = 2 * Math.PI * radio * (radio + altura);
+                    alert("El área del cilindro es " + areaCilindro);
+                } 
             }
-
 
         </script>
     </head>
-    <body onload="figGeometricas()"></body>
+    <body onload="menu()"></body>
 </html>
