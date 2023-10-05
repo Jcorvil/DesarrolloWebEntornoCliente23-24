@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+
+        <!--
+            1. No tenga moda
+            2. Solo se repita 1 número con respecto a los demás, el cual será la moda
+            3. Existen 2 modas: Si existe algun valor entre ellos → Ambos serían modas
+                                Si no existe ningún valor entre ellos → La moda será la media de ambos valores
+        -->
+
+        <script>
+            function mediaRangoModa() {
+                var datos = [];
+                var media = 0;
+                var rando = 0;
+                var moda = 0;
+
+                while (true) {
+                    var numArray = Number(prompt("Introduzca valores enteros positivos. Para terminar, introduzca una letra."));
+
+                    if (isNaN(numArray) || numArray === null) {
+                        break;
+                    } else if (numArray >= 0) {
+                        datos.push(numArray);
+                    } else if (numArray < 0 || numArray === float) {
+                        alert("Introduzca valores correctos");
+                    } else {
+                    }
+                }
+            }
+
+            function media(datos) {}
+        </script>
+    </head>
+    <body onload="mediaRangoModa()"></body>
+</html>
