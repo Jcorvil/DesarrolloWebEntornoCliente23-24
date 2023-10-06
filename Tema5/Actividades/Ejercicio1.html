@@ -14,24 +14,56 @@
             function mediaRangoModa() {
                 var datos = [];
                 var media = 0;
-                var rando = 0;
+                var rango = 0;
                 var moda = 0;
 
                 while (true) {
                     var numArray = Number(prompt("Introduzca valores enteros positivos. Para terminar, introduzca una letra."));
 
                     if (isNaN(numArray) || numArray === null) {
+                        calculoMedia(datos);
+                        calculoRango(datos);
+                        calculoModa(datos);
                         break;
                     } else if (numArray >= 0) {
                         datos.push(numArray);
                     } else if (numArray < 0 || numArray === float) {
-                        alert("Introduzca valores correctos");
-                    } else {
+                        alert("Introduzca solo números enteros positivos");
                     }
                 }
             }
 
-            function media(datos) {}
+            function calculoMedia(datos) {
+                var sumaMedia = 0;
+                for (var i = 0; i < datos.length; i++) {
+                    sumaMedia += datos[i];
+                }
+                media = sumaMedia / datos.length;
+                alert("La media de los números introducidos es " + media);
+            }
+
+            function calculoRango(datos) {
+                var numMenor = datos[0];
+                var numMayor = datos[0];
+
+                for (var i = 0; i < datos.length; i++) {
+                    if (datos[i] < numMenor) {
+                        numMenor = datos[i];
+                    }
+                    if (datos[i] > numMayor) {
+                        numMayor = datos[i];
+                    }
+                }
+                rango = numMayor - numMenor;
+                alert("El número mayor es " + numMayor);
+                alert("El número menor es " + numMenor);
+                alert("El rango de los números introducidos es " + rango);
+            }
+
+            function calculoModa(datos) {
+                
+            }
+
         </script>
     </head>
     <body onload="mediaRangoModa()"></body>
