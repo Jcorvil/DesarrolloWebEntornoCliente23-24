@@ -81,7 +81,10 @@
                     if (frecuencia > frecuenciaMax) {
                         frecuenciaMax = frecuencia;
                         moda = [num];
-                    } else if (frecuencia == frecuenciaMax && moda.indexOf(num) == -1) {
+                    } else if (
+                        frecuencia == frecuenciaMax &&
+                        moda.indexOf(num) == -1
+                    ) {
                         moda.push(num);
                     }
                 }
@@ -90,13 +93,34 @@
                 if (frecuenciaMax == 1) {
                     console.log("No tiene moda");
                     alert("No tiene moda");
+                }
                 // Caso 2: Tiene una moda y solo una
-                } else if (moda.length == 1) {
+                else if (moda.length == 1) {
                     console.log("La moda es: " + moda);
                     alert("La moda es: " + moda);
                 }
+                // Caso 3: Tiene múltiples modas
+                else {
+                    var modasAdyacentes = [];
 
-                
+                    moda.sort((a, b) => a - b); // Ordena las modas en orden ascendente.
+
+                    for (var i = 0; i < moda.length - 1; i++) {
+                        if (moda[i + 1] - moda[i] == 1) {
+                            modasAdyacentes.push(moda[i], moda[i + 1]);
+                        }
+                    }
+
+                    if (modasAdyacentes.length > 0) {
+                        console.log(
+                            "Las modas adyacentes son: " + modasAdyacentes
+                        );
+                        alert("Las modas adyacentes son: " + modasAdyacentes);
+                    } else {
+                        console.log("Las modas no son adyacentes: " + moda);
+                        alert("Las modas no son adyacentes: " + moda);
+                    }
+                }
             }
         </script>
     </head>
