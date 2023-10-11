@@ -18,7 +18,11 @@
                 var moda = 0;
 
                 while (true) {
-                    var numArray = Number(prompt("Introduzca valores enteros positivos. Para terminar, introduzca una letra."));
+                    var numArray = Number(
+                        prompt(
+                            "Introduzca valores enteros positivos. Para terminar, introduzca una letra."
+                        )
+                    );
 
                     if (isNaN(numArray) || numArray === null) {
                         calculoMedia(datos);
@@ -61,9 +65,39 @@
             }
 
             function calculoModa(datos) {
+                var moda = [];
+                var frecuenciaMax = 0;
+
+                for (var i = 0; i < datos.length; i++) {
+                    var num = datos[i];
+                    var frecuencia = 0;
+
+                    for (var j = 0; j < datos.length; j++) {
+                        if (datos[j] == num) {
+                            frecuencia++;
+                        }
+                    }
+
+                    if (frecuencia > frecuenciaMax) {
+                        frecuenciaMax = frecuencia;
+                        moda = [num];
+                    } else if (frecuencia == frecuenciaMax && moda.indexOf(num) == -1) {
+                        moda.push(num);
+                    }
+                }
+
+                // Caso 1: No tiene moda
+                if (frecuenciaMax == 1) {
+                    console.log("No tiene moda");
+                    alert("No tiene moda");
+                // Caso 2: Tiene una moda y solo una
+                } else if (moda.length == 1) {
+                    console.log("La moda es: " + moda);
+                    alert("La moda es: " + moda);
+                }
+
                 
             }
-
         </script>
     </head>
     <body onload="mediaRangoModa()"></body>
