@@ -99,28 +99,6 @@
                     console.log("La moda es: " + moda);
                     alert("La moda es: " + moda);
                 }
-                // Caso 3: Tiene múltiples modas
-                else {
-                    var modasAdyacentes = [];
-
-                    moda.sort((a, b) => a - b); // Ordena las modas en orden ascendente.
-
-                    for (var i = 0; i < moda.length - 1; i++) {
-                        if (moda[i + 1] - moda[i] == 1) {
-                            modasAdyacentes.push(moda[i], moda[i + 1]);
-                        }
-                    }
-
-                    if (modasAdyacentes.length > 0) {
-                        console.log(
-                            "Las modas adyacentes son: " + modasAdyacentes
-                        );
-                        alert("Las modas adyacentes son: " + modasAdyacentes);
-                    } else {
-                        console.log("Las modas no son adyacentes: " + moda);
-                        alert("Las modas no son adyacentes: " + moda);
-                    }
-                }
             }
         </script>
     </head>
