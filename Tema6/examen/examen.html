@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+
+		<script>
+
+			//Función que se encarga de recoger los datos con los que se van a trabajar.
+			//Si se pulsa la C se introduce el array a datosConsumo y se crea otro.
+			//Si se pulsa F se termina de hacer el array bidimensional y se trabaja con él
+			function consumoZonas() {
+				var datosConsumo = [];
+				var zonaActual = [];
+				var numDependencia = 0;
+
+				while (true) {
+					var num = prompt(
+						"Introduzca los valores de la dependencia " +
+							numDependencia +
+							" (en kWh). Para pasar de dependencia, pulse c. Para terminar, pulse f"
+					);
+
+					if (num == "f" || num == "F") {
+						datosConsumo.push(zonaActual);
+						numDependencia++;
+						consumoMax(datosConsumo);
+						consumoSuperiorDos(datosConsumo);
+						break;
+					} else if (num == "c" || num == "C") {
+						datosConsumo.push(zonaActual);
+						numDependencia++;
+						zonaActual = [];
+					} else if (num < 0 || num % 1 !== 0) {
+						alert("Introduzca solo números enteros positivos.");
+					} else if (!isNaN(num) && num >= 0) {
+						zonaActual.push(num);
+					}
+				}
+
+
+                //Funcion que calcula el consumo máximo de cada dependencia.
+                //Recorre los arrays dentro de la matriz e iguala el dato en cuestión con "consumoKWHMax". Si el dato es mayor, lo sobreescribe.
+                //Una vez termine de recorrer el array, "consumoKWHMax" vale lo que el valor mayor de cada uno de los arrays y este dato se guarda en
+                //"arrayImprimir", que es lo que se usa para imprimir la alerta.
+				function consumoMax(datosConsumo) {
+					var consumoPorZona = [];
+					var consumoKWHMax = 0;
+					var arrayImprimir = [];
+					var mensaje = "";
+
+					for (var i = 0; i < datosConsumo.length; i++) {
+						var fila = datosConsumo[i];
+
+						for (var j = 0; j < fila.length; j++) {
+							var numero = parseInt(fila[j]);
+
+							if (numero > consumoKWHMax) {
+								consumoKWHMax == numero;
+							}
+						}
+						consumoPorZona.push(numero);
+
+						mensaje = "Dependencia" + i + " : " + numero;
+						arrayImprimir.push(mensaje);
+					}
+
+					alert("Consumo mayor por dependencia: " + arrayImprimir + " . ");
+				}
+
+
+                //Esta función recorre la matriz para compromar si alguno de los arrays que contiene tiene un valor superior a 2.
+                //Si se da el caso, guarda esta dependencia en "arrayImprimir" para imprimirla luego
+				function consumoSuperiorDos(datosConsumo) {
+					var mensaje = "";
+					var arrayImprimir = [];
+
+					for (var i = 0; i < datosConsumo.length; i++) {
+						var fila = datosConsumo[i];
+						var numeroDependencia = 0;
+
+						for (var j = 0; j < fila.length; j++) {
+							var numero = parseInt(fila[j]);
+
+							if (numero > 2) {
+								mensaje = "Dependencia" + i;
+								numeroDependencia++;
+								arrayImprimir.push(mensaje);
+								break;
+							}
+						}
+					}
+					alert("Dependencias que superan los 2 kWh: " + arrayImprimir);
+				}
+			}
+		</script>
+	</head>
+	<body onload="consumoZonas()"></body>
+</html>
