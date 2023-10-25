@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+
+		<script>
+			function menuCesta() {
+				var cesta = [];
+
+				while (true) {
+					var opcionMenu = Number(
+						prompt(
+							"\n 1.Ver cesta. \n 2.Insertar un artículo. \n " +
+								"3.Borrar artículo. \n 4.Vaciar cesta \n 5.Salir"
+						)
+					);
+
+					switch (opcionMenu) {
+						case 1:
+							verCesta(cesta);
+							break;
+						case 2:
+							insertArticulo();
+							break;
+						case 3:
+							borrarArticulo();
+							break;
+						case 4:
+							vaciarCesta();
+							break;
+						case 5:
+							return;
+						default:
+							alert("Opción no válida");
+					}
+				}
+			}
+
+			function verCesta(cesta) {
+				var cabeceraTabla = [
+					"Cod.",
+					"Nombre",
+					"Precio",
+					"Cantidad",
+					"Subtotal",
+				];
+
+				alert(cabeceraTabla);
+			}
+
+			function insertArticulo() {
+                var cod = Number(prompt("Introduzca el código del producto"));
+                var nombre = prompt("Introduzca el nombre del producto");
+                var precio = Number(prompt("Intoduzca el precio del producto"));
+                var cantidad = Number(prompt("Introduzca la cantidad del producto"));
+                var subtotal = precio * cantidad;
+
+                alert("Se va a añadir el siguiente preoducto:\n" +
+                "Código: " + cod + "\n" + "Nombre: " + nombre + "\n" + "Precio: " + precio + "\n" + "Cantidad: " + cantidad + "\n" + subtotal)
+
+                var articuloAnnadir = {
+
+
+                };
+
+
+            }
+
+			function borrarArticulo() {}
+
+			function vaciarCesta() {}
+		</script>
+	</head>
+	<body onload="menuCesta()"></body>
+</html>
