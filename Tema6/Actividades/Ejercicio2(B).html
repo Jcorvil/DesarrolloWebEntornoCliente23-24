@@ -20,13 +20,13 @@
 							verCesta(cesta);
 							break;
 						case 2:
-							insertArticulo();
+							insertArticulo(cesta);
 							break;
 						case 3:
-							borrarArticulo();
+							borrarArticulo(cesta);
 							break;
 						case 4:
-							vaciarCesta();
+							vaciarCesta(cesta);
 							break;
 						case 5:
 							return;
@@ -45,30 +45,135 @@
 					"Subtotal",
 				];
 
-				alert(cabeceraTabla);
+				var contenidoCesta = [cabeceraTabla.join(" | ")];
+
+				for (var i = 0; i < cesta.length; i++) {
+					var articulo = cesta[i];
+					var total = 0;
+
+					var linea = [
+						articulo.cod,
+						articulo.nombre,
+						articulo.precio,
+						articulo.cantidad,
+						articulo.subtotal,
+					];
+
+					total += articulo.subtotal;
+
+					contenidoCesta.push(linea.join(" | "));
+
+				}
+
+				contenidoCesta.push("Total: " + total);
+
+				alert(contenidoCesta.join("\n"));
 			}
 
-			function insertArticulo() {
-                var cod = Number(prompt("Introduzca el código del producto"));
-                var nombre = prompt("Introduzca el nombre del producto");
-                var precio = Number(prompt("Intoduzca el precio del producto"));
-                var cantidad = Number(prompt("Introduzca la cantidad del producto"));
-                var subtotal = precio * cantidad;
-
-                alert("Se va a añadir el siguiente preoducto:\n" +
-                "Código: " + cod + "\n" + "Nombre: " + nombre + "\n" + "Precio: " + precio + "\n" + "Cantidad: " + cantidad + "\n" + subtotal)
-
-                var articuloAnnadir = {
 
 
-                };
+			function insertArticulo(cesta) {
+				var cod = Number(prompt("Introduzca el código del producto"));
+				var nombre = prompt("Introduzca el nombre del producto");
+				var precio = Number(prompt("Intoduzca el precio del producto"));
+				var cantidad = Number(prompt("Introduzca la cantidad del producto"));
+				var subtotal = precio * cantidad;
+
+				alert(
+					"Se va a añadir el siguiente producto:\n" +
+						"Código: " +
+						cod +
+						"\n" +
+						"Nombre: " +
+						nombre +
+						"\n" +
+						"Precio: " +
+						precio +
+						"\n" +
+						"Cantidad: " +
+						cantidad +
+						"\n" +
+						"Subtotal: " +
+						subtotal
+				);
+
+				var articuloAnnadir = {
+					cod: cod,
+					nombre: nombre,
+					precio: precio,
+					cantidad: cantidad,
+					subtotal: subtotal,
+				};
+
+				cesta.push(articuloAnnadir);
+			}
 
 
-            }
+			function borrarArticulo(cesta) {
 
-			function borrarArticulo() {}
+				var cabeceraTabla = [
+					"Posición",
+					"Cod.",
+					"Nombre",
+					"Precio",
+					"Cantidad",
+					"Subtotal",
+				];
 
-			function vaciarCesta() {}
+				var contenidoCesta = [cabeceraTabla.join(" | ")];
+				var posicion = 1;
+
+				for (var i = 0; i < cesta.length; i++) {
+					var articulo = cesta[i];
+					var total = 0;
+
+					var linea = [
+						posicion,
+						articulo.cod,
+						articulo.nombre,
+						articulo.precio,
+						articulo.cantidad,
+						articulo.subtotal,
+					];
+
+					posicion++;
+					total += articulo.subtotal;
+
+					contenidoCesta.push(linea.join(" | "));
+
+				}
+
+				contenidoCesta.push("Total: " + total);
+
+				var articuloEliminar = Number(prompt("Escoja el artículo a eliminar: \n \n" + contenidoCesta.join("\n")));
+
+				if (articuloEliminar >= 1 && articuloEliminar <= cesta.length){
+					cesta.splice(articuloEliminar - 1, 1);
+					alert("Se ha eliminado el artículo");
+				} else {
+					alert("Introduzca un artículo válido");
+				}
+
+			}
+
+
+			function vaciarCesta(cesta) {
+				var opcionVaciar = Number(prompt("¿Seguro que quiere vaciar la cesta? \n 1.Si \n 2.No"));
+
+				switch (opcionVaciar){
+					case 1:
+						cesta.length = 0;
+						alert("Se ha vaciado la cesta");
+						break;
+					case 2:
+						break;
+					default:
+						alert("Opción no válida");
+						vaciarCesta(cesta);
+				}
+
+
+			}
 		</script>
 	</head>
 	<body onload="menuCesta()"></body>
