@@ -6,6 +6,7 @@
 		<script>
 			function menuCesta() {
 				var cesta = [];
+				var cod = 1;
 
 				while (true) {
 					var opcionMenu = Number(
@@ -20,7 +21,7 @@
 							verCesta(cesta);
 							break;
 						case 2:
-							insertArticulo(cesta);
+							cod = insertArticulo(cesta, cod);
 							break;
 						case 3:
 							borrarArticulo(cesta);
@@ -36,7 +37,9 @@
 				}
 			}
 
-			function verCesta(cesta) {
+			function verCesta(cesta, cod) {
+				var total = 0;
+
 				var cabeceraTabla = [
 					"Cod.",
 					"Nombre",
@@ -45,12 +48,11 @@
 					"Subtotal",
 				];
 
-				var contenidoCesta = [cabeceraTabla.join(" | ")];
+				var contenidoCesta = [];
 
-				for (var i = 0; i < cesta.length; i++) {
-					var articulo = cesta[i];
-					var total = 0;
+				contenidoCesta.push(cabeceraTabla.join(" | "));
 
+				cesta.forEach(function (articulo) {
 					var linea = [
 						articulo.cod,
 						articulo.nombre,
@@ -59,60 +61,73 @@
 						articulo.subtotal,
 					];
 
-					total += articulo.subtotal;
+					if (articulo.cod >= 1) {
+						contenidoCesta.push(linea.join("           "));
+					}
 
-					contenidoCesta.push(linea.join(" | "));
-
-				}
+					if (articulo.subtotal >= 0 && articulo.cod > 0) {
+						total += articulo.subtotal;
+					}
+				});
 
 				contenidoCesta.push("Total: " + total);
 
 				alert(contenidoCesta.join("\n"));
 			}
 
-
-
-			function insertArticulo(cesta) {
-				var cod = Number(prompt("Introduzca el código del producto"));
+			function insertArticulo(cesta, cod) {
 				var nombre = prompt("Introduzca el nombre del producto");
-				var precio = Number(prompt("Intoduzca el precio del producto"));
+				var precio = Number(prompt("Introduzca el precio del producto"));
 				var cantidad = Number(prompt("Introduzca la cantidad del producto"));
 				var subtotal = precio * cantidad;
 
-				alert(
-					"Se va a añadir el siguiente producto:\n" +
-						"Código: " +
-						cod +
-						"\n" +
-						"Nombre: " +
-						nombre +
-						"\n" +
-						"Precio: " +
-						precio +
-						"\n" +
-						"Cantidad: " +
-						cantidad +
-						"\n" +
-						"Subtotal: " +
-						subtotal
-				);
+				if (precio < 0) {
+					alert(
+						"El precio no puede ser negativo. Vuelva a introducir el artículo"
+					);
+					insertArticulo(cesta, cod);
+				} else if (cantidad % 1 != 0) {
+					alert(
+						"La cantidad no puede ser decimal. Vuelva a introducir el artículo"
+					);
+					insertArticulo(cesta, cod);
+				} else {
+					alert(
+						"Se va a añadir el siguiente producto:\n" +
+							"Código: " +
+							cod +
+							"\n" +
+							"Nombre: " +
+							nombre +
+							"\n" +
+							"Precio: " +
+							precio +
+							"\n" +
+							"Cantidad: " +
+							cantidad +
+							"\n" +
+							"Subtotal: " +
+							subtotal
+					);
 
-				var articuloAnnadir = {
-					cod: cod,
-					nombre: nombre,
-					precio: precio,
-					cantidad: cantidad,
-					subtotal: subtotal,
-				};
+					var articuloAnnadir = {
+						cod: cod,
+						nombre: nombre,
+						precio: precio,
+						cantidad: cantidad,
+						subtotal: subtotal,
+					};
+				}
+
+				cod++;
 
 				cesta.push(articuloAnnadir);
+
+				return cod;
 			}
 
-
 			function borrarArticulo(cesta) {
-
 				var cabeceraTabla = [
-					"Posición",
 					"Cod.",
 					"Nombre",
 					"Precio",
@@ -121,46 +136,53 @@
 				];
 
 				var contenidoCesta = [cabeceraTabla.join(" | ")];
-				var posicion = 1;
+				var total = 0;
 
-				for (var i = 0; i < cesta.length; i++) {
-					var articulo = cesta[i];
-					var total = 0;
+				cesta.forEach(function (articulo) {
+					if (articulo.cod !== 0) {
+						var linea = [
+							articulo.cod,
+							articulo.nombre,
+							articulo.precio,
+							articulo.cantidad,
+							articulo.subtotal,
+						];
 
-					var linea = [
-						posicion,
-						articulo.cod,
-						articulo.nombre,
-						articulo.precio,
-						articulo.cantidad,
-						articulo.subtotal,
-					];
+						if (articulo.subtotal >= 0) {
+							total += articulo.subtotal;
+						}
 
-					posicion++;
-					total += articulo.subtotal;
-
-					contenidoCesta.push(linea.join(" | "));
-
-				}
+						contenidoCesta.push(linea.join("           "));
+					}
+				});
 
 				contenidoCesta.push("Total: " + total);
 
-				var articuloEliminar = Number(prompt("Escoja el artículo a eliminar: \n \n" + contenidoCesta.join("\n")));
+				var articuloEliminar = Number(
+					prompt(
+						"Escoja el artículo a eliminar: \n ------ \n" +
+							contenidoCesta.join("\n") +
+							"\n \n ------ \nPara salir, pulse 0"
+					)
+				);
 
-				if (articuloEliminar >= 1 && articuloEliminar <= cesta.length){
-					cesta.splice(articuloEliminar - 1, 1);
+				if (articuloEliminar >= 1 && articuloEliminar <= cesta.length) {
+					cesta[articuloEliminar - 1].cod = 0;
 					alert("Se ha eliminado el artículo");
+				} else if (articuloEliminar == 0) {
+					return;
 				} else {
 					alert("Introduzca un artículo válido");
+					borrarArticulo(cesta);
 				}
-
 			}
 
-
 			function vaciarCesta(cesta) {
-				var opcionVaciar = Number(prompt("¿Seguro que quiere vaciar la cesta? \n 1.Si \n 2.No"));
+				var opcionVaciar = Number(
+					prompt("¿Seguro que quiere vaciar la cesta? \n 1.Si \n 2.No")
+				);
 
-				switch (opcionVaciar){
+				switch (opcionVaciar) {
 					case 1:
 						cesta.length = 0;
 						alert("Se ha vaciado la cesta");
@@ -171,8 +193,6 @@
 						alert("Opción no válida");
 						vaciarCesta(cesta);
 				}
-
-
 			}
 		</script>
 	</head>
