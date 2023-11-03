@@ -1,0 +1,48 @@
+<!-- Realizar un programa JS que cumpla con los siguientes requisitos :
+
+Contenga una clase padre Empleado, con los atributos nombre, apellido, edad, y un método muestra ( ) de los cuales sólo edad es una variable privada. El método
+mostrará los tres atributos.
+Una clase hija Profesor (que hereda de Empleado), y que posee un atributo cargo y un método muestraCargo ( ) el cual mostrará el cargo cuando se invoque.
+Tras instanciar un objeto Profesor mostrará el nombre completo, edad y cargo en una ventana emergente (alert) llamando a los métodos correspondientes. -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Parte A</title>
+	</head>
+	<body>
+		<script>
+			class Empleado {
+				#edad;
+				constructor(nombre, apellido, edad) {
+					this.nombre = nombre;
+					this.apellido = apellido;
+					this.#edad = edad;
+				}
+
+				muestra() {
+					return this.nombre + " " + this.apellido + " " + this.#edad;
+				}
+			}
+
+			class Profesor extends Empleado {
+                constructor(nombre, apellido, edad, cargo) {
+                    super(nombre, apellido, edad);
+					this.cargo = cargo;
+				}
+                
+                muestraCargo() {
+                    return this.cargo;
+				}
+            }
+            
+            var profesor1 = new Profesor("Señor", "Trabajador", 40, "Jefe departamento");
+            alert(profesor1.muestra());
+            alert(profesor1.muestraCargo());
+		
+
+        </script>
+	</body>
+</html>

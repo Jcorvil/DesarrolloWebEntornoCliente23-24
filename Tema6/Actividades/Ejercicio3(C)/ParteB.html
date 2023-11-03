@@ -1,0 +1,97 @@
+<!-- Se trata de hacer el mismo ejemplo de la cesta pero usando POO, estudiando qué estructura tendría el programa en cuanto a número de clases necesarias,
+atributos o variables, y métodos. (Al menos 2 clases) -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Parte B</title>
+	</head>
+	<body>
+		<script>
+			class Articulo {
+				#cod;
+				#nombre;
+				#precio;
+				#cantidad;
+				#subtotal;
+
+				constructor(cod, nombre, precio, cantidad, subtotal) {
+					this.#cod = cod;
+					this.#nombre = nombre;
+					this.#precio = precio;
+					this.#cantidad = cantidad;
+					this.#subtotal = calculoSubtotal();
+				}
+
+				articulo() {
+					return (
+						this.#cod +
+						this.#nombre +
+						this.#precio +
+						this.#cantidad +
+						this.#subtotal
+					);
+				}
+
+				set cod(cod) {
+					this.#cod = precio;
+				}
+
+				set nombre(nombre) {
+					this.#nombre = nombre;
+				}
+
+				set precio(precio) {
+					this.#precio = precio;
+					this.#subtotal = calculoSubtotal();
+				}
+
+				set cantidad(cantidad) {
+					this.#cantidad = cantidad;
+					this.#subtotal = calculoSubtotal();
+				}
+
+				calculoSubtotal(precio, cantidad) {
+					return this.#precio * this.#cantidad;
+				}
+			}
+
+			function menuCesta() {
+				var cesta = [];
+				var cod = 1;
+
+				while (true) {
+					var opcionMenu = Number(
+						prompt(
+							"\n 1.Ver cesta. \n 2.Insertar un artículo. \n " +
+								"3.Borrar artículo. \n 4.Vaciar cesta \n 5.Salir"
+						)
+					);
+
+					switch (opcionMenu) {
+						case 1:
+							verCesta(cesta);
+							break;
+						case 2:
+							cod = insertArticulo(cesta, cod);
+							break;
+						case 3:
+							borrarArticulo(cesta);
+							break;
+						case 4:
+							vaciarCesta(cesta);
+							break;
+						case 5:
+							return;
+						default:
+							alert("Opción no válida");
+					}
+				}
+			}
+
+
+		</script>
+	</body onload="menuCesta()">
+</html>
