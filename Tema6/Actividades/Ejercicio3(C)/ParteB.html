@@ -10,112 +10,23 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 	</head>
 	<body>
 		<script>
-
 			class Cesta {
-
 				static verCesta(cesta, cod) {
-				var total = 0;
+					var total = 0;
 
-				var cabeceraTabla = [
-					"Cod.",
-					"Nombre",
-					"Precio",
-					"Cantidad",
-					"Subtotal",
-				];
-
-				var contenidoCesta = [];
-
-				contenidoCesta.push(cabeceraTabla.join(" | "));
-
-				cesta.forEach(function (articulo) {
-					var linea = [
-						articulo.cod,
-						articulo.nombre,
-						articulo.precio,
-						articulo.cantidad,
-						articulo.subtotal,
+					var cabeceraTabla = [
+						"Cod.",
+						"Nombre",
+						"Precio",
+						"Cantidad",
+						"Subtotal",
 					];
 
-					if (articulo.cod >= 1) {
-						contenidoCesta.push(linea.join("           "));
-					}
+					var contenidoCesta = [];
 
-					if (articulo.subtotal >= 0 && articulo.cod > 0) {
-						total += articulo.subtotal;
-					}
-				});
+					contenidoCesta.push(cabeceraTabla.join(" | "));
 
-				contenidoCesta.push("Total: " + total);
-
-				alert(contenidoCesta.join("\n"));
-			}
-
-			static insertArticulo(cesta, cod) {
-				var nombre = prompt("Introduzca el nombre del producto");
-				var precio = Number(prompt("Introduzca el precio del producto"));
-				var cantidad = Number(prompt("Introduzca la cantidad del producto"));
-				var subtotal = precio * cantidad;
-
-				if (precio < 0) {
-					alert(
-						"El precio no puede ser negativo. Vuelva a introducir el artículo"
-					);
-					insertArticulo(cesta, cod);
-				} else if (cantidad % 1 != 0) {
-					alert(
-						"La cantidad no puede ser decimal. Vuelva a introducir el artículo"
-					);
-					insertArticulo(cesta, cod);
-				} else {
-					alert(
-						"Se va a añadir el siguiente producto:\n" +
-							"Código: " +
-							cod +
-							"\n" +
-							"Nombre: " +
-							nombre +
-							"\n" +
-							"Precio: " +
-							precio +
-							"\n" +
-							"Cantidad: " +
-							cantidad +
-							"\n" +
-							"Subtotal: " +
-							subtotal
-					);
-
-					var articuloAnnadir = {
-						cod: cod,
-						nombre: nombre,
-						precio: precio,
-						cantidad: cantidad,
-						subtotal: subtotal,
-					};
-				}
-
-				cod++;
-
-				cesta.push(articuloAnnadir);
-
-				return cod;
-			}
-
-			static borrarArticulo(cesta) {
-				var cabeceraTabla = [
-					"Cod.",
-					"Nombre",
-					"Precio",
-					"Cantidad",
-					"Subtotal",
-				];
-
-				var contenidoCesta = [cabeceraTabla.join(" | ")];
-				var total = 0;
-
-				cesta.forEach(function (articulo) {
-					if (articulo.cod !== 0) {
+					cesta.forEach(function (articulo) {
 						var linea = [
 							articulo.cod,
 							articulo.nombre,
@@ -124,57 +35,140 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 							articulo.subtotal,
 						];
 
-						if (articulo.subtotal >= 0) {
-							total += articulo.subtotal;
+						if (articulo.cod >= 1) {
+							contenidoCesta.push(linea.join("           "));
 						}
 
-						contenidoCesta.push(linea.join("           "));
+						if (articulo.subtotal >= 0 && articulo.cod > 0) {
+							total += articulo.subtotal;
+						}
+					});
+
+					contenidoCesta.push("Total: " + total);
+
+					alert(contenidoCesta.join("\n"));
+				}
+
+				static insertArticulo(cesta, cod) {
+					var nombre = prompt("Introduzca el nombre del producto");
+					var precio = Number(prompt("Introduzca el precio del producto"));
+					var cantidad = Number(prompt("Introduzca la cantidad del producto"));
+					var subtotal = precio * cantidad;
+
+					if (precio < 0) {
+						alert(
+							"El precio no puede ser negativo. Vuelva a introducir el artículo"
+						);
+						insertArticulo(cesta, cod);
+					} else if (cantidad % 1 != 0) {
+						alert(
+							"La cantidad no puede ser decimal. Vuelva a introducir el artículo"
+						);
+						insertArticulo(cesta, cod);
+					} else {
+						alert(
+							"Se va a añadir el siguiente producto:\n" +
+								"Código: " +
+								cod +
+								"\n" +
+								"Nombre: " +
+								nombre +
+								"\n" +
+								"Precio: " +
+								precio +
+								"\n" +
+								"Cantidad: " +
+								cantidad +
+								"\n" +
+								"Subtotal: " +
+								subtotal
+						);
+
+						var articuloAnnadir = {
+							cod: cod,
+							nombre: nombre,
+							precio: precio,
+							cantidad: cantidad,
+							subtotal: subtotal,
+						};
 					}
-				});
 
-				contenidoCesta.push("Total: " + total);
+					cod++;
 
-				var articuloEliminar = Number(
-					prompt(
-						"Escoja el artículo a eliminar: \n ------ \n" +
-							contenidoCesta.join("\n") +
-							"\n \n ------ \nPara salir, pulse 0"
-					)
-				);
+					cesta.push(articuloAnnadir);
 
-				if (articuloEliminar >= 1 && articuloEliminar <= cesta.length) {
-					cesta[articuloEliminar - 1].cod = 0;
-					alert("Se ha eliminado el artículo");
-				} else if (articuloEliminar == 0) {
-					return;
-				} else {
-					alert("Introduzca un artículo válido");
-					borrarArticulo(cesta);
+					return cod;
+				}
+
+				static borrarArticulo(cesta) {
+					var cabeceraTabla = [
+						"Cod.",
+						"Nombre",
+						"Precio",
+						"Cantidad",
+						"Subtotal",
+					];
+
+					var contenidoCesta = [cabeceraTabla.join(" | ")];
+					var total = 0;
+
+					cesta.forEach(function (articulo) {
+						if (articulo.cod !== 0) {
+							var linea = [
+								articulo.cod,
+								articulo.nombre,
+								articulo.precio,
+								articulo.cantidad,
+								articulo.subtotal,
+							];
+
+							if (articulo.subtotal >= 0) {
+								total += articulo.subtotal;
+							}
+
+							contenidoCesta.push(linea.join("           "));
+						}
+					});
+
+					contenidoCesta.push("Total: " + total);
+
+					var articuloEliminar = Number(
+						prompt(
+							"Escoja el artículo a eliminar: \n ------ \n" +
+								contenidoCesta.join("\n") +
+								"\n \n ------ \nPara salir, pulse 0"
+						)
+					);
+
+					if (articuloEliminar >= 1 && articuloEliminar <= cesta.length) {
+						cesta[articuloEliminar - 1].cod = 0;
+						alert("Se ha eliminado el artículo");
+					} else if (articuloEliminar == 0) {
+						return;
+					} else {
+						alert("Introduzca un artículo válido");
+						borrarArticulo(cesta);
+					}
+				}
+
+				static vaciarCesta(cesta) {
+					var opcionVaciar = Number(
+						prompt("¿Seguro que quiere vaciar la cesta? \n 1.Si \n 2.No")
+					);
+
+					switch (opcionVaciar) {
+						case 1:
+							cesta.length = 0;
+							alert("Se ha vaciado la cesta");
+							break;
+						case 2:
+							break;
+						default:
+							alert("Opción no válida");
+							vaciarCesta(cesta);
+					}
 				}
 			}
-
-			static vaciarCesta(cesta) {
-				var opcionVaciar = Number(
-					prompt("¿Seguro que quiere vaciar la cesta? \n 1.Si \n 2.No")
-				);
-
-				switch (opcionVaciar) {
-					case 1:
-						cesta.length = 0;
-						alert("Se ha vaciado la cesta");
-						break;
-					case 2:
-						break;
-					default:
-						alert("Opción no válida");
-						vaciarCesta(cesta);
-				}
-			}
-
-			}
-
-			
-
 
 			class Articulo {
 				#cod;
@@ -238,16 +232,16 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 
 					switch (opcionMenu) {
 						case 1:
-							verCesta(cesta);
+							Cesta.verCesta(cesta, cod);
 							break;
 						case 2:
-							cod = insertArticulo(cesta, cod);
+							cod = Cesta.insertArticulo(cesta, cod);
 							break;
 						case 3:
-							borrarArticulo(cesta);
+							Cesta.borrarArticulo(cesta);
 							break;
 						case 4:
-							vaciarCesta(cesta);
+							Cesta.vaciarCesta(cesta);
 							break;
 						case 5:
 							return;
@@ -257,7 +251,7 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 				}
 			}
 
-
+			menuCesta();
 		</script>
-	</body onload="menuCesta()">
+	</body>
 </html>
