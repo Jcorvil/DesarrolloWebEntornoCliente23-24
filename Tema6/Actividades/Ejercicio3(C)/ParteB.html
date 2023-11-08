@@ -27,20 +27,16 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 					contenidoCesta.push(cabeceraTabla.join(" | "));
 
 					cesta.forEach(function (articulo) {
-						var linea = [
-							articulo.cod,
-							articulo.nombre,
-							articulo.precio,
-							articulo.cantidad,
-							articulo.subtotal,
-						];
-
-						if (articulo.cod >= 1) {
+						if (articulo.getCod() !== 0) {
+							var linea = [
+								articulo.getCod(),
+								articulo.getNombre(),
+								articulo.getPrecio(),
+								articulo.getCantidad(),
+								articulo.getSubtotal(),
+							];
 							contenidoCesta.push(linea.join("           "));
-						}
-
-						if (articulo.subtotal >= 0 && articulo.cod > 0) {
-							total += articulo.subtotal;
+							total += articulo.getSubtotal();
 						}
 					});
 
@@ -53,44 +49,37 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 					var nombre = prompt("Introduzca el nombre del producto");
 					var precio = Number(prompt("Introduzca el precio del producto"));
 					var cantidad = Number(prompt("Introduzca la cantidad del producto"));
-					var subtotal = precio * cantidad;
 
 					if (precio < 0) {
 						alert(
 							"El precio no puede ser negativo. Vuelva a introducir el artículo"
 						);
-						insertArticulo(cesta, cod);
+						Cesta.insertArticulo(cesta, cod);
 					} else if (cantidad % 1 != 0) {
 						alert(
 							"La cantidad no puede ser decimal. Vuelva a introducir el artículo"
 						);
-						insertArticulo(cesta, cod);
+						Cesta.insertArticulo(cesta, cod);
 					} else {
+						var articuloAnnadir = new Articulo(cod, nombre, precio, cantidad);
+
 						alert(
 							"Se va a añadir el siguiente producto:\n" +
 								"Código: " +
-								cod +
+								articuloAnnadir.getCod() +
 								"\n" +
 								"Nombre: " +
-								nombre +
+								articuloAnnadir.getNombre() +
 								"\n" +
 								"Precio: " +
-								precio +
+								articuloAnnadir.getPrecio() +
 								"\n" +
 								"Cantidad: " +
-								cantidad +
+								articuloAnnadir.getCantidad() +
 								"\n" +
 								"Subtotal: " +
-								subtotal
+								articuloAnnadir.getSubtotal()
 						);
-
-						var articuloAnnadir = {
-							cod: cod,
-							nombre: nombre,
-							precio: precio,
-							cantidad: cantidad,
-							subtotal: subtotal,
-						};
 					}
 
 					cod++;
@@ -113,17 +102,17 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 					var total = 0;
 
 					cesta.forEach(function (articulo) {
-						if (articulo.cod !== 0) {
+						if (articulo.getCod() !== 0) {
 							var linea = [
-								articulo.cod,
-								articulo.nombre,
-								articulo.precio,
-								articulo.cantidad,
-								articulo.subtotal,
+								articulo.getCod(),
+								articulo.getNombre(),
+								articulo.getPrecio(),
+								articulo.getCantidad(),
+								articulo.getSubtotal(),
 							];
 
-							if (articulo.subtotal >= 0) {
-								total += articulo.subtotal;
+							if (articulo.getSubtotal() >= 0) {
+								total += articulo.getSubtotal();
 							}
 
 							contenidoCesta.push(linea.join("           "));
@@ -134,20 +123,26 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 
 					var articuloEliminar = Number(
 						prompt(
-							"Escoja el artículo a eliminar: \n ------ \n" +
+							"Escoja el artículo a eliminar por código: \n ------ \n" +
 								contenidoCesta.join("\n") +
 								"\n \n ------ \nPara salir, pulse 0"
 						)
 					);
 
-					if (articuloEliminar >= 1 && articuloEliminar <= cesta.length) {
-						cesta[articuloEliminar - 1].cod = 0;
-						alert("Se ha eliminado el artículo");
-					} else if (articuloEliminar == 0) {
+					if (articuloEliminar === 0) {
 						return;
+					}
+
+					var index = cesta.findIndex(
+						(articulo) => articulo.getCod() === articuloEliminar
+					);
+
+					if (index !== -1) {
+						cesta.splice(index, 1);
+						alert("Se ha eliminado el artículo");
 					} else {
-						alert("Introduzca un artículo válido");
-						borrarArticulo(cesta);
+						alert("Introduzca un código de artículo válido");
+						Cesta.borrarArticulo(cesta);
 					}
 				}
 
@@ -165,7 +160,40 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 							break;
 						default:
 							alert("Opción no válida");
-							vaciarCesta(cesta);
+							Cesta.vaciarCesta(cesta);
+					}
+				}
+
+				static menuCesta() {
+					var cesta = [];
+					var cod = 1;
+
+					while (true) {
+						var opcionMenu = Number(
+							prompt(
+								"\n 1.Ver cesta. \n 2.Insertar un artículo. \n " +
+									"3.Borrar artículo. \n 4.Vaciar cesta \n 5.Salir"
+							)
+						);
+
+						switch (opcionMenu) {
+							case 1:
+								Cesta.verCesta(cesta, cod);
+								break;
+							case 2:
+								cod = Cesta.insertArticulo(cesta, cod);
+								break;
+							case 3:
+								Cesta.borrarArticulo(cesta);
+								break;
+							case 4:
+								Cesta.vaciarCesta(cesta);
+								break;
+							case 5:
+								return;
+							default:
+								alert("Opción no válida");
+						}
 					}
 				}
 			}
@@ -182,17 +210,7 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 					this.#nombre = nombre;
 					this.#precio = precio;
 					this.#cantidad = cantidad;
-					this.#subtotal = calculoSubtotal();
-				}
-
-				articulo() {
-					return (
-						this.#cod +
-						this.#nombre +
-						this.#precio +
-						this.#cantidad +
-						this.#subtotal
-					);
+					this.#subtotal = subtotal;
 				}
 
 				set cod(cod) {
@@ -205,53 +223,34 @@ atributos o variables, y métodos. (Al menos 2 clases) -->
 
 				set precio(precio) {
 					this.#precio = precio;
-					this.#subtotal = calculoSubtotal();
 				}
 
 				set cantidad(cantidad) {
 					this.#cantidad = cantidad;
-					this.#subtotal = calculoSubtotal();
 				}
 
-				calculoSubtotal(precio, cantidad) {
+				getCod() {
+					return this.#cod;
+				}
+
+				getNombre() {
+					return this.#nombre;
+				}
+
+				getPrecio() {
+					return this.#precio;
+				}
+
+				getCantidad() {
+					return this.#cantidad;
+				}
+
+				getSubtotal() {
 					return this.#precio * this.#cantidad;
 				}
 			}
 
-			function menuCesta() {
-				var cesta = [];
-				var cod = 1;
-
-				while (true) {
-					var opcionMenu = Number(
-						prompt(
-							"\n 1.Ver cesta. \n 2.Insertar un artículo. \n " +
-								"3.Borrar artículo. \n 4.Vaciar cesta \n 5.Salir"
-						)
-					);
-
-					switch (opcionMenu) {
-						case 1:
-							Cesta.verCesta(cesta, cod);
-							break;
-						case 2:
-							cod = Cesta.insertArticulo(cesta, cod);
-							break;
-						case 3:
-							Cesta.borrarArticulo(cesta);
-							break;
-						case 4:
-							Cesta.vaciarCesta(cesta);
-							break;
-						case 5:
-							return;
-						default:
-							alert("Opción no válida");
-					}
-				}
-			}
-
-			menuCesta();
+			Cesta.menuCesta();
 		</script>
 	</body>
 </html>
