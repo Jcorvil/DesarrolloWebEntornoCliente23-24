@@ -1,27 +1,41 @@
 class Vehiculo {
-
-    constructor() {
-        this.validarMatricula();
-        this.cambiarTitDNI();
-    }
+	constructor() {
+		this.validarMatricula();
+		this.cambiarTitDNI();
+	}
 
 	validarMatricula() {
-		var matricula = document.getElementById("inputMatricula");
-
-		if (matricula.validity.typeMismatch) {
-			matricula.setCustomValidity("Ingrese una matrícula válida (0000XXX)");
-		} else {
-			matricula.setCustomValidity("");
-		}
+		document
+			.getElementById("inputMatricula")
+			.addEventListener("input", function () {
+				if (this.validity.patternMismatch) {
+					this.setCustomValidity("Ingrese una matrícula válida (0000XXX)");
+				} else {
+					this.setCustomValidity("");
+				}
+			});
 	}
 
 	cambiarTitDNI() {
-		var titular_dni = document.getElementById("titular-dni");
+		var dniInput = document.getElementById("inputDNI");
+		var dniLabel = document.getElementById("labelDNI");
+
+		dniInput.addEventListener("focus", function () {
+			dniLabel.textContent = "Editando DNI...";
+		});
+
+		dniInput.addEventListener("blur", function () {
+			dniLabel.textContent = "DNI";
+		});
 	}
 }
 
 var vehiculo = new Vehiculo();
 
+document.getElementById("inputDNI").addEventListener("focus", function () {
+	vehiculo.cambiarTitDNI();
+});
 
-matricula.addEventListener("keyup", this.#validarMatricula.bind(this));
-dni.addEventListener("keyup", this.#cambiarTitDNI.bind(this));
+document.getElementById("inputDNI").addEventListener("blur", function () {
+	vehiculo.cambiarTitDNI();
+});
