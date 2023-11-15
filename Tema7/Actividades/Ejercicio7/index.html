@@ -21,7 +21,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Tarea 7</title>
 
-		<script src="script.js"></script>
+		<script src="script.js" defer></script>
 
 		<style type="text/css">
 			input:invalid {
@@ -53,12 +53,13 @@
 		</div>
 
 		<div class="container">
-			<form class="row g-3 needs-validation">
+			<form class="row g-3 needs-validation" method="GET">
 				<h4>Datos del vehículo</h4>
 				<div class="col-md-3">
 					<label for="inputMatricula" class="form-label">Matrícula:</label>
 					<input
 						type="text"
+						name="matriculaName"
 						class="form-control"
 						id="inputMatricula"
 						pattern="[0-9]{4}[A-Za-z]{3}"
@@ -73,17 +74,19 @@
 					<input
 						type="date"
 						class="form-control"
+						name="fechaName"
 						id="inputFechaMatri"
 						required
 					/>
 				</div>
 				<div class="col-md-6">
-					<label for="inputMatricula" class="form-label"
+					<label for="inputBastidor" class="form-label"
 						>6 ultimos dígitos (nº de bastidor):</label
 					>
 					<input
 						type="text"
 						class="form-control"
+						name="bastidorName"
 						id="inputBastidor"
 						pattern="[0-9]{6}"
 						title="El número de bastidor debe tener seis (6) números"
@@ -93,13 +96,14 @@
 				<h4>Datos del titular</h4>
 				<div class="col-md-3">
 					<label for="inputNombre" class="form-label">Nombre:</label>
-					<input type="text" class="form-control" id="inputNombre" required />
+					<input type="text" class="form-control" name="nombreName" id="inputNombre" required />
 				</div>
 				<div class="col-md-3">
 					<label for="inputApellidos" class="form-label">Apellidos:</label>
 					<input
 						type="text"
 						class="form-control"
+						name="apellidosName"
 						id="inputApellidos"
 						required
 					/>
@@ -108,6 +112,7 @@
 					<label for="inputDomicilio" class="form-label">Domicilio:</label>
 					<input
 						type="text"
+						name="domicilioName"
 						class="form-control"
 						id="inputDomicilio"
 						required
@@ -118,6 +123,7 @@
 					<input
 						type="text"
 						class="form-control"
+						name="dniName"
 						id="inputDNI"
 						pattern="[0-9]{8}[A-Za-z]{1}"
 						title="Introduzca un DNI válido (12345678A)"
@@ -133,6 +139,7 @@
 					<input
 						type="text"
 						class="form-control"
+						name="telefonoName"
 						id="inputTlf"
 						pattern="[0-9]{9}"
 						title="Introduzca un teléfono válido"
