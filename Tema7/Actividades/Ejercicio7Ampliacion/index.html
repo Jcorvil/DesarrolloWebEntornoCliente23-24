@@ -7,35 +7,42 @@
 		<title>Actividad Log-in</title>
 
 		<link rel="stylesheet" href="styles.css" />
-		<script src="script.js" defer></script>
-
+		<script src="script.js"></script>
 	</head>
 
 	<body>
-		<section>
-			<div class="login">
+		<form id="loginForm">
+			<div class="signin" method="GET">
 				<div class="content">
-					<h2>Log in</h2>
+					<h2>Log In</h2>
 
 					<div class="form">
 						<div class="inputBox">
-							<input type="text" name="usuario" id="user" required /> <i>Username</i>
+							<input type="text" name="usuario" id="user" required />
+							<i>Username</i>
 						</div>
 
 						<div class="inputBox">
-							<input type="password" name="password" id="pass" required /> <i>Password</i>
+							<input
+								type="password"
+								name="password"
+								id="pass"
+								pattern="/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/"
+								required
+							/>
+							<i>Password</i>
 						</div>
 
 						<div class="links">
 							<a href="#">Forgot Password</a> <a href="#">Signup</a>
 						</div>
 
-						<div class="inputBox">
-							<input type="submit" value="Login" />
-						</div>
+						<button class="inputBox" type="button" onclick="fEvento()">
+							Iniciar Sesión
+						</button>
 					</div>
 				</div>
 			</div>
-		</section>
+		</form>
 	</body>
 </html>

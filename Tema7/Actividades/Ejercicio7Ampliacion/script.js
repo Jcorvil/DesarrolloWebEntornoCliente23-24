@@ -1,22 +1,27 @@
 class Login {
 	#usuarios = [
-		{ user: Usuario1, pass: "Abcdefg1" },
-		{ user: Usuario2, pass: "1234567A" },
-		{ user: Usuario3, pass: "1A2q3g4p" },
+		{ user: "Usuario1", pass: "Abcdefg1" },
+		{ user: "Usuario2", pass: "1234567A" },
+		{ user: "Usuario3", pass: "1A2q3g4p" },
 	];
 
+	validacion(user, pass) {
+		var usuarioLogin = this.#usuarios.find(
+			(usuario) => usuario.user == user && usuario.pass == pass
+		);
 
-    validacion() {
-        var patron = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$";
-        var user = document.getElementById("user"); 
-        var pass = document.getElementById("pass"); 
+		if (usuarioLogin) {
+			alert("Se ha iniciado la sesión");
+		} else {
+			alert("El usuario y/o contraseña es incorrecto");
+		}
+	}
+}
 
-        if (patron.test(pass.value)) {
+function fEvento() {
+	var usuario = document.getElementById("user").value;
+	var contrasena = document.getElementById("pass").value;
 
-        }
-
-
-    
-    }
-    
+	var logeo = new Login();
+	logeo.validacion(usuario, contrasena);
 }
