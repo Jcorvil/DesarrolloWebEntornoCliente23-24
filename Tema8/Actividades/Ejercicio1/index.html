@@ -11,83 +11,15 @@
 			<img src="img/logo.png" alt="Logo de la tienda" />
 			<h1>Tienda Online</h1>
 		</header>
+		<script src="script.js" defer></script>
 
 		<main>
-			<table class="main__tabla--productos">
-				<tr>
-					<td>
-						<img
-							class="table__fotoProducto"
-							src="https://source.unsplash.com/random/500x500?handbag"
-							alt="bolso"
-						/>
-						<h3>Bolso</h3>
-						<p>Precio</p>
-						<input type="number" />
-						<p><button>Añadir</button></p>
-					</td>
-					<td>
-						<img
-							class="table__fotoProducto"
-							src="https://source.unsplash.com/random/500x500?smartphone"
-							alt="bolso"
-						/>
-						<h3>Bolso</h3>
-						<p>Precio</p>
-						<input type="number" />
-						<p><button>Añadir</button></p>
-					</td>
-					<td>
-						<img
-							class="table__fotoProducto"
-							src="https://source.unsplash.com/random/500x500?mug"
-							alt="bolso"
-						/>
-						<h3>Bolso</h3>
-						<p>Precio</p>
-						<input type="number" />
-						<p><button>Añadir</button></p>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img
-							class="table__fotoProducto"
-							src="https://source.unsplash.com/random/500x500?shoes"
-							alt="bolso"
-						/>
-						<h3>Bolso</h3>
-						<p>Precio</p>
-						<input type="number" />
-						<p><button>Añadir</button></p>
-					</td>
-					<td>
-						<img
-							class="table__fotoProducto"
-							src="https://source.unsplash.com/random/500x500?dress"
-							alt="bolso"
-						/>
-						<h3>Bolso</h3>
-						<p>Precio</p>
-						<input type="number" />
-						<p><button>Añadir</button></p>
-					</td>
-					<td>
-						<img
-							class="table__fotoProducto"
-							src="https://source.unsplash.com/random/500x500?camera"
-							alt="bolso"
-						/>
-						<h3>Bolso</h3>
-						<p>Precio</p>
-						<input type="number" />
-						<p><button>Añadir</button></p>
-					</td>
-				</tr>
+			<table class="main__tabla--productos" id="tablaProductos">
+				
 			</table>
 
 			<div class="main__tabla--cesta">
-				<img src="img/cesta.png" alt="cesta">
+				<img src="img/cesta.png" alt="cesta" />
 				<table>
 					<thead>
 						<tr>
@@ -108,10 +40,14 @@
 						</tr>
 					</tbody>
 					<tr>
-						<td colspan="5" class="table__totalPrecio">Total: <input type="number" disabled> €</td>
+						<td colspan="5" class="table__totalPrecio">
+							Total: <input type="number" disabled /> €
+						</td>
 					</tr>
 					<tr>
-						<td colspan="5" class="table__totalIVA">Total IVA(21%): <input type="number" disabled> €</td>
+						<td colspan="5" class="table__totalIVA">
+							Total IVA(21%): <input type="number" disabled /> €
+						</td>
 					</tr>
 				</table>
 			</div>
