@@ -5,13 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Tienda Online</title>
 		<link rel="stylesheet" href="styles.css" />
+		<script src="script.js" defer></script>
 	</head>
 	<body>
 		<header>
 			<img src="img/logo.png" alt="Logo de la tienda" />
 			<h1>Tienda Online</h1>
 		</header>
-		<script src="script.js" defer></script>
 
 		<main>
 			<table class="main__tabla--productos" id="tablaProductos">
@@ -30,23 +30,17 @@
 							<th>Subtotal</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+					<tbody id="tbodyCesta">
+
 					</tbody>
 					<tr>
 						<td colspan="5" class="table__totalPrecio">
-							Total: <input type="number" disabled /> €
+							Total: <input type="number" id="totalPrecio" disabled /> €
 						</td>
 					</tr>
 					<tr>
 						<td colspan="5" class="table__totalIVA">
-							Total IVA(21%): <input type="number" disabled /> €
+							Total IVA(21%): <input type="number" id="totalIVA" disabled /> €
 						</td>
 					</tr>
 				</table>
