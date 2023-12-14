@@ -80,3 +80,16 @@ main {
 .main__tabla--productos input {
     background-color:aliceblue;
 }
+
+
+#tablaProductos{
+	grid-column: span 6;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 80px;
+}
+
+#totalPrecio, #totalIVA{
+	border: none;
+	background: none;
+}

@@ -1,14 +1,13 @@
 class Cesta {
-	constructor(){
+	constructor() {
 		this.productosCesta = [];
 	}
 
 	agregarCesta(producto) {
 		this.productosCesta.push(producto);
-		this.actualizarCesta();
 	}
 
-	actualizarCesta(){
+	actualizarCesta() {
 		const tbodyCesta = document.getElementById("tbodyCesta");
 		tbodyCesta.innerHTML = "";
 
@@ -26,9 +25,8 @@ class Cesta {
 			tbodyCesta.appendChild(tr);
 
 			precioTotal += producto.subtotal;
-		})
+		});
 	}
-
 }
 
 class Productos {
@@ -38,6 +36,10 @@ class Productos {
 		this.cantidad = cantidad;
 		this.precio = precio;
 		this.imagen = imagen;
+	}
+
+	calcularSubtotal() {
+		return this.cantidad * this.precio;
 	}
 }
 
@@ -87,6 +89,8 @@ class ContProductos {
 		},
 	];
 
+	cesta = new Cesta();
+
 	mostrarProductos() {
 		const tablaProductos = document.getElementById("tablaProductos");
 		tablaProductos.innerHTML = "";
@@ -94,30 +98,32 @@ class ContProductos {
 		this.productos.forEach((producto) => {
 			const tr = document.createElement("tr");
 			tr.innerHTML = `
-                <td><img src="${producto.imagen}" alt="${producto.nombre}" width="200" height="200" class="producto__foto"></td>
-                <td>${producto.nombre}</td>
-                <td>${producto.precio} €</td>
-                <td><input type="number" id="cantidad-${producto.id}"></td>
-                <td><button onclick="agregarCesta(${producto.id})">Añadir</button></td>`;
+			<div id="productoEnTabla">
+				<div><img src="${producto.imagen}" alt="${producto.nombre}" width="200" height="200" class="producto__foto"></div>
+				<h3>${producto.nombre}</h3>
+				<p>${producto.precio}€</p>
+				<input type="number" id="cantidad-${producto.id}">
+				<button onclick="(new ContProductos()).agregarCesta(${producto.id})">Añadir</button>
+			</div>
+			`;
 			tablaProductos.appendChild(tr);
 		});
+	}
 
-		const cesta = new Cesta();
+	agregarCesta(id) {
+		const producto = this.productos.find((p) => p.id === id);
 
-		window.agregarCesta = (id) => {
-			const cantidadInput = document.getElementById(`cantidad-${id}`);
-			const cantidad = parseInt(cantidadInput.value, 10) || 0;
-
-			const producto = this.listaProductos.find((p) => p.id === id);
-
-			if (producto && cantidad > 0) {
-				producto.cantidad = cantidad;
-				producto.subtotal = cantidad * producto.precio;
-				cesta.agregarCesta(producto);
-			}
-		};
+		if (producto) {
+			producto.cantidad = parseInt(
+				document.getElementById(`cantidad-${id}`).value
+			);
+			this.cesta.agregarCesta(producto);
+			this.cesta.actualizarCesta();
+		}
 	}
 }
 
-const contProductos = new ContProductos();
-contProductos.mostrarProductos();
+document.addEventListener("DOMContentLoaded", function () {
+	const contProductos = new ContProductos();
+	contProductos.mostrarProductos();
+});
