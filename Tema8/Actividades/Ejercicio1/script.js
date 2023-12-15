@@ -9,7 +9,6 @@ class Cesta {
 
 	actualizarCesta() {
 		const tbodyCesta = document.getElementById("tbodyCesta");
-		tbodyCesta.innerHTML = "";
 
 		var precioTotal = 0;
 
@@ -26,9 +25,14 @@ class Cesta {
 
 			precioTotal += producto.subtotal;
 		});
+
+		const totalConIVA = precioTotal * 1.21;
+		document.getElementById("totalPrecio").value = precioTotal.toFixed(2);
+		document.getElementById("totalIVA").value = totalConIVA.toFixed(2);
 	}
 }
 
+//Productos --------------------------------------------------------
 class Productos {
 	constructor(id, nombre, cantidad, precio, imagen) {
 		this.id = id;
@@ -37,53 +41,50 @@ class Productos {
 		this.precio = precio;
 		this.imagen = imagen;
 	}
-
-	calcularSubtotal() {
-		return this.cantidad * this.precio;
-	}
 }
 
+// ContProductos ---------------------------------------------------
 class ContProductos {
 	productos = [
 		{
 			id: 1,
 			nombre: "Bolso",
-			cantidad: 0,
+			cantidad: 1,
 			precio: 20,
 			imagen: "https://source.unsplash.com/random/500x500?handbag",
 		},
 		{
 			id: 2,
 			nombre: "Móvil",
-			cantidad: 0,
+			cantidad: 1,
 			precio: 120,
 			imagen: "https://source.unsplash.com/random/500x500?smartphone",
 		},
 		{
 			id: 3,
 			nombre: "Taza",
-			cantidad: 0,
+			cantidad: 1,
 			precio: 10,
 			imagen: "https://source.unsplash.com/random/500x500?mug",
 		},
 		{
 			id: 4,
 			nombre: "Zapatos",
-			cantidad: 0,
+			cantidad: 1,
 			precio: 50.5,
 			imagen: "https://source.unsplash.com/random/500x500?shoes",
 		},
 		{
 			id: 5,
 			nombre: "Vestido",
-			cantidad: 0,
+			cantidad: 1,
 			precio: 30,
 			imagen: "https://source.unsplash.com/random/500x500?dress",
 		},
 		{
 			id: 6,
 			nombre: "Cámara",
-			cantidad: 0,
+			cantidad: 1,
 			precio: 100,
 			imagen: "https://source.unsplash.com/random/500x500?camera",
 		},
@@ -102,7 +103,7 @@ class ContProductos {
 				<div><img src="${producto.imagen}" alt="${producto.nombre}" width="200" height="200" class="producto__foto"></div>
 				<h3>${producto.nombre}</h3>
 				<p>${producto.precio}€</p>
-				<input type="number" id="cantidad-${producto.id}">
+				<input type="number" id="cantidad-${producto.id}" value="1">
 				<button onclick="(new ContProductos()).agregarCesta(${producto.id})">Añadir</button>
 			</div>
 			`;
@@ -117,13 +118,16 @@ class ContProductos {
 			producto.cantidad = parseInt(
 				document.getElementById(`cantidad-${id}`).value
 			);
+
+			producto.subtotal = producto.cantidad * producto.precio;
+
 			this.cesta.agregarCesta(producto);
 			this.cesta.actualizarCesta();
 		}
 	}
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 	const contProductos = new ContProductos();
 	contProductos.mostrarProductos();
 });

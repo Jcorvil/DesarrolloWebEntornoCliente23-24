@@ -6,10 +6,9 @@ body {
 }
 
 header {
-	background-color: grey;
+	background-color: rgb(221, 121, 54);
 	color: #fff;
 	text-align: center;
-	padding: 1em;
 	gap: 15em;
 
 	display: flex;
@@ -30,6 +29,7 @@ main {
 
 .main__tabla--productos {
 	grid-column: 2/8;
+	margin-left: 50px;
 }
 
 .main__tabla--cesta {
@@ -92,4 +92,12 @@ main {
 #totalPrecio, #totalIVA{
 	border: none;
 	background: none;
+}
+
+#tbodyCesta{
+	text-align: center;
+}
+
+#productoEnTabla input{
+	width: 30%;
 }
