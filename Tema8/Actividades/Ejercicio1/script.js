@@ -41,6 +41,10 @@ class Productos {
 		this.precio = precio;
 		this.imagen = imagen;
 	}
+
+	calculoSubtotal() {
+		return this.cantidad * this.precio;
+	}
 }
 
 // ContProductos ---------------------------------------------------
