@@ -77,6 +77,11 @@ main {
     color: white;
 }
 
+#tbodyCesta button{
+	background-color: rgb(255, 69, 69);
+	padding: 10px;
+}
+
 .main__tabla--productos input {
     background-color:aliceblue;
 }

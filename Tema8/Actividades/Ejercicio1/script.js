@@ -9,7 +9,6 @@ class Cesta {
 
 	actualizarCesta() {
 		const tbodyCesta = document.getElementById("tbodyCesta");
-
 		var precioTotal = 0;
 
 		this.productosCesta.forEach((producto) => {
@@ -19,7 +18,8 @@ class Cesta {
 				<td>${producto.nombre}</td>
 				<td>${producto.cantidad}</td>
 				<td>${producto.precio} €</td>
-				<td>${producto.subtotal} €</td>
+				<td>${producto.subtotal.toFixed(2)} €</td>
+				<td><button>X</button></td>
 			`;
 			tbodyCesta.appendChild(tr);
 
@@ -119,13 +119,24 @@ class ContProductos {
 		const producto = this.productos.find((p) => p.id === id);
 
 		if (producto) {
-			producto.cantidad = parseInt(
-				document.getElementById(`cantidad-${id}`).value
+			const existingProduct = this.cesta.productosCesta.find(
+				(p) => p.id === id
 			);
 
-			producto.subtotal = producto.cantidad * producto.precio;
+			if (existingProduct) {
+				existingProduct.cantidad += parseInt(
+					document.getElementById(`cantidad-${id}`).value
+				);
+				existingProduct.subtotal =
+					existingProduct.cantidad * existingProduct.precio;
+			} else {
+				producto.cantidad = parseInt(
+					document.getElementById(`cantidad-${id}`).value
+				);
+				producto.subtotal = producto.cantidad * producto.precio;
+				this.cesta.agregarCesta(producto);
+			}
 
-			this.cesta.agregarCesta(producto);
 			this.cesta.actualizarCesta();
 		}
 	}
