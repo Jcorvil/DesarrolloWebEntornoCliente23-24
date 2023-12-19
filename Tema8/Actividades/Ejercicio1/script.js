@@ -1,38 +1,64 @@
+// -------------------------Cesta-------------------------------
 class Cesta {
-	constructor() {
-		this.productosCesta = [];
-	}
+	productosCesta = [];
 
 	agregarCesta(producto) {
 		this.productosCesta.push(producto);
+		this.guardarEnLocalStorage();
 	}
 
 	actualizarCesta() {
 		const tbodyCesta = document.getElementById("tbodyCesta");
 		var precioTotal = 0;
 
+		tbodyCesta.innerHTML = "";
+
 		this.productosCesta.forEach((producto) => {
 			const tr = document.createElement("tr");
 			tr.innerHTML = `
-				<td>${producto.id}</td>
-				<td>${producto.nombre}</td>
-				<td>${producto.cantidad}</td>
-				<td>${producto.precio} €</td>
-				<td>${producto.subtotal.toFixed(2)} €</td>
-				<td><button>X</button></td>
-			`;
+		  <td>${producto.id}</td>
+		  <td>${producto.nombre}</td>
+		  <td>${producto.cantidad}</td>
+		  <td>${producto.precio} €</td>
+		  <td>${producto.subtotal.toFixed(2)} €</td>
+		  <td><button onclick="contProductos.eliminarDeCesta(${
+				producto.id
+			})">X</button></td>
+		`;
 			tbodyCesta.appendChild(tr);
 
 			precioTotal += producto.subtotal;
 		});
 
-		const totalConIVA = precioTotal * 1.21;
 		document.getElementById("totalPrecio").value = precioTotal.toFixed(2);
-		document.getElementById("totalIVA").value = totalConIVA.toFixed(2);
+		document.getElementById("totalIVA").value =
+			precioTotal + precioTotal * (0.21).toFixed(2);
+	}
+
+	eliminarProducto(id) {
+		for (let i = 0; i < this.productosCesta.length; i++) {
+			if (this.productosCesta[i].id === id) {
+				this.productosCesta.splice(i, 1);
+				this.actualizarCesta();
+				break;
+			}
+		}
+	}
+
+	guardarEnLocalStorage() {
+		localStorage.setItem("cesta", JSON.stringify(this.productosCesta));
+	}
+
+	cargarDesdeLocalStorage() {
+		const cestaGuardada = localStorage.getItem("cesta");
+		if (cestaGuardada) {
+			this.productosCesta = JSON.parse(cestaGuardada);
+			this.actualizarCesta();
+		}
 	}
 }
 
-//Productos --------------------------------------------------------
+// -------------------------Productos-------------------------------
 class Productos {
 	constructor(id, nombre, cantidad, precio, imagen) {
 		this.id = id;
@@ -41,13 +67,9 @@ class Productos {
 		this.precio = precio;
 		this.imagen = imagen;
 	}
-
-	calculoSubtotal() {
-		return this.cantidad * this.precio;
-	}
 }
 
-// ContProductos ---------------------------------------------------
+// -------------------------contProductos-------------------------------
 class ContProductos {
 	productos = [
 		{
@@ -94,7 +116,7 @@ class ContProductos {
 		},
 	];
 
-	cesta = new Cesta();
+	cesta = new Cesta(this.productos);
 
 	mostrarProductos() {
 		const tablaProductos = document.getElementById("tablaProductos");
@@ -108,7 +130,7 @@ class ContProductos {
 				<h3>${producto.nombre}</h3>
 				<p>${producto.precio}€</p>
 				<input type="number" id="cantidad-${producto.id}" value="1">
-				<button onclick="(new ContProductos()).agregarCesta(${producto.id})">Añadir</button>
+				<button onclick="contProductos.agregarCesta(${producto.id})">Añadir</button>
 			</div>
 			`;
 			tablaProductos.appendChild(tr);
@@ -119,16 +141,13 @@ class ContProductos {
 		const producto = this.productos.find((p) => p.id === id);
 
 		if (producto) {
-			const existingProduct = this.cesta.productosCesta.find(
-				(p) => p.id === id
-			);
+			const prodExistente = this.cesta.productosCesta.find((p) => p.id === id);
 
-			if (existingProduct) {
-				existingProduct.cantidad += parseInt(
+			if (prodExistente) {
+				prodExistente.cantidad += parseInt(
 					document.getElementById(`cantidad-${id}`).value
 				);
-				existingProduct.subtotal =
-					existingProduct.cantidad * existingProduct.precio;
+				prodExistente.subtotal = prodExistente.cantidad * prodExistente.precio;
 			} else {
 				producto.cantidad = parseInt(
 					document.getElementById(`cantidad-${id}`).value
@@ -140,9 +159,19 @@ class ContProductos {
 			this.cesta.actualizarCesta();
 		}
 	}
+
+	eliminarDeCesta(id) {
+		this.cesta.eliminarProducto(id);
+	}
+
+	cargarCestaDesdeLocalStorage() {
+		this.cesta.cargarDesdeLocalStorage();
+	}
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-	const contProductos = new ContProductos();
+	contProductos = new ContProductos();
 	contProductos.mostrarProductos();
+
+	contProductos.cargarCestaDesdeLocalStorage();
 });
