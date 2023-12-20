@@ -33,6 +33,7 @@ class Cesta {
 		document.getElementById("totalPrecio").value = precioTotal.toFixed(2);
 		document.getElementById("totalIVA").value =
 			precioTotal + precioTotal * (0.21).toFixed(2);
+		this.guardarEnLocalStorage();
 	}
 
 	eliminarProducto(id) {
@@ -43,6 +44,7 @@ class Cesta {
 				break;
 			}
 		}
+		this.guardarEnLocalStorage();
 	}
 
 	guardarEnLocalStorage() {

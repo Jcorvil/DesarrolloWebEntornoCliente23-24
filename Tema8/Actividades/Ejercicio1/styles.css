@@ -39,15 +39,14 @@ main {
 .table__totalPrecio {
 	border-top: 1px solid grey;
 	text-align: right;
-    height: 20%;
+	height: 20%;
 }
 
 .table__totalIVA {
 	border: none;
 	text-align: right;
-    height: 20%;
+	height: 20%;
 }
-
 
 .table__fotoProducto {
 	width: 60%;
@@ -57,7 +56,7 @@ main {
 .main__tabla--productos th {
 	border: 1px solid grey;
 }
-	
+
 .main__tabla--productos td {
 	border: none;
 	text-align: center;
@@ -69,40 +68,51 @@ main {
 
 .main__tabla--cesta img {
 	width: 15%;
-    height: auto;
+	height: auto;
 }
 
 .main__tabla--productos button {
-    background-color: cornflowerblue;
-    color: white;
+	background-color: cornflowerblue;
+	color: white;
 }
 
-#tbodyCesta button{
+#tbodyCesta button {
 	background-color: rgb(255, 69, 69);
 	padding: 10px;
 }
 
 .main__tabla--productos input {
-    background-color:aliceblue;
+	background-color: aliceblue;
 }
 
-
-#tablaProductos{
+#tablaProductos {
 	grid-column: span 6;
 	display: flex;
 	flex-wrap: wrap;
 	gap: 80px;
 }
 
-#totalPrecio, #totalIVA{
+#totalPrecio,
+#totalIVA {
 	border: none;
 	background: none;
+	text-align: right;
 }
 
-#tbodyCesta{
+#tbodyCesta {
 	text-align: center;
 }
 
-#productoEnTabla input{
+#tbodyCesta td {
+	border-top: 1px solid black;
+	border-top-style: dashed;
+}
+
+#tbodyCesta :nth-child(1) {
+	border-right: 1px solid black;
+	border-right-style: dashed;
+}
+
+#productoEnTabla input {
 	width: 30%;
 }
