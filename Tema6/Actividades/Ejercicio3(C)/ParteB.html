@@ -1,0 +1,256 @@
+<!-- Se trata de hacer el mismo ejemplo de la cesta pero usando POO, estudiando qué estructura tendría el programa en cuanto a número de clases necesarias,
+atributos o variables, y métodos. (Al menos 2 clases) -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Parte B</title>
+	</head>
+	<body>
+		<script>
+			class Cesta {
+				static verCesta(cesta, cod) {
+					var total = 0;
+
+					var cabeceraTabla = [
+						"Cod.",
+						"Nombre",
+						"Precio",
+						"Cantidad",
+						"Subtotal",
+					];
+
+					var contenidoCesta = [];
+
+					contenidoCesta.push(cabeceraTabla.join(" | "));
+
+					cesta.forEach(function (articulo) {
+						if (articulo.getCod() !== 0) {
+							var linea = [
+								articulo.getCod(),
+								articulo.getNombre(),
+								articulo.getPrecio(),
+								articulo.getCantidad(),
+								articulo.getSubtotal(),
+							];
+							contenidoCesta.push(linea.join("           "));
+							total += articulo.getSubtotal();
+						}
+					});
+
+					contenidoCesta.push("Total: " + total);
+
+					alert(contenidoCesta.join("\n"));
+				}
+
+				static insertArticulo(cesta, cod) {
+					var nombre = prompt("Introduzca el nombre del producto");
+					var precio = Number(prompt("Introduzca el precio del producto"));
+					var cantidad = Number(prompt("Introduzca la cantidad del producto"));
+
+					if (precio < 0) {
+						alert(
+							"El precio no puede ser negativo. Vuelva a introducir el artículo"
+						);
+						Cesta.insertArticulo(cesta, cod);
+					} else if (cantidad % 1 != 0) {
+						alert(
+							"La cantidad no puede ser decimal. Vuelva a introducir el artículo"
+						);
+						Cesta.insertArticulo(cesta, cod);
+					} else {
+						var articuloAnnadir = new Articulo(cod, nombre, precio, cantidad);
+
+						alert(
+							"Se va a añadir el siguiente producto:\n" +
+								"Código: " +
+								articuloAnnadir.getCod() +
+								"\n" +
+								"Nombre: " +
+								articuloAnnadir.getNombre() +
+								"\n" +
+								"Precio: " +
+								articuloAnnadir.getPrecio() +
+								"\n" +
+								"Cantidad: " +
+								articuloAnnadir.getCantidad() +
+								"\n" +
+								"Subtotal: " +
+								articuloAnnadir.getSubtotal()
+						);
+					}
+
+					cod++;
+
+					cesta.push(articuloAnnadir);
+
+					return cod;
+				}
+
+				static borrarArticulo(cesta) {
+					var cabeceraTabla = [
+						"Cod.",
+						"Nombre",
+						"Precio",
+						"Cantidad",
+						"Subtotal",
+					];
+
+					var contenidoCesta = [cabeceraTabla.join(" | ")];
+					var total = 0;
+
+					cesta.forEach(function (articulo) {
+						if (articulo.getCod() !== 0) {
+							var linea = [
+								articulo.getCod(),
+								articulo.getNombre(),
+								articulo.getPrecio(),
+								articulo.getCantidad(),
+								articulo.getSubtotal(),
+							];
+
+							if (articulo.getSubtotal() >= 0) {
+								total += articulo.getSubtotal();
+							}
+
+							contenidoCesta.push(linea.join("           "));
+						}
+					});
+
+					contenidoCesta.push("Total: " + total);
+
+					var articuloEliminar = Number(
+						prompt(
+							"Escoja el artículo a eliminar por código: \n ------ \n" +
+								contenidoCesta.join("\n") +
+								"\n \n ------ \nPara salir, pulse 0"
+						)
+					);
+
+					if (articuloEliminar === 0) {
+						return;
+					}
+
+					var index = cesta.findIndex(
+						(articulo) => articulo.getCod() === articuloEliminar
+					);
+
+					if (index !== -1) {
+						cesta.splice(index, 1);
+						alert("Se ha eliminado el artículo");
+					} else {
+						alert("Introduzca un código de artículo válido");
+						Cesta.borrarArticulo(cesta);
+					}
+				}
+
+				static vaciarCesta(cesta) {
+					var opcionVaciar = Number(
+						prompt("¿Seguro que quiere vaciar la cesta? \n 1.Si \n 2.No")
+					);
+
+					switch (opcionVaciar) {
+						case 1:
+							cesta.length = 0;
+							alert("Se ha vaciado la cesta");
+							break;
+						case 2:
+							break;
+						default:
+							alert("Opción no válida");
+							Cesta.vaciarCesta(cesta);
+					}
+				}
+
+				static menuCesta() {
+					var cesta = [];
+					var cod = 1;
+
+					while (true) {
+						var opcionMenu = Number(
+							prompt(
+								"\n 1.Ver cesta. \n 2.Insertar un artículo. \n " +
+									"3.Borrar artículo. \n 4.Vaciar cesta \n 5.Salir"
+							)
+						);
+
+						switch (opcionMenu) {
+							case 1:
+								Cesta.verCesta(cesta, cod);
+								break;
+							case 2:
+								cod = Cesta.insertArticulo(cesta, cod);
+								break;
+							case 3:
+								Cesta.borrarArticulo(cesta);
+								break;
+							case 4:
+								Cesta.vaciarCesta(cesta);
+								break;
+							case 5:
+								return;
+							default:
+								alert("Opción no válida");
+						}
+					}
+				}
+			}
+
+			class Articulo {
+				#cod;
+				#nombre;
+				#precio;
+				#cantidad;
+				#subtotal;
+
+				constructor(cod, nombre, precio, cantidad, subtotal) {
+					this.#cod = cod;
+					this.#nombre = nombre;
+					this.#precio = precio;
+					this.#cantidad = cantidad;
+					this.#subtotal = subtotal;
+				}
+
+				set cod(cod) {
+					this.#cod = precio;
+				}
+
+				set nombre(nombre) {
+					this.#nombre = nombre;
+				}
+
+				set precio(precio) {
+					this.#precio = precio;
+				}
+
+				set cantidad(cantidad) {
+					this.#cantidad = cantidad;
+				}
+
+				getCod() {
+					return this.#cod;
+				}
+
+				getNombre() {
+					return this.#nombre;
+				}
+
+				getPrecio() {
+					return this.#precio;
+				}
+
+				getCantidad() {
+					return this.#cantidad;
+				}
+
+				getSubtotal() {
+					return this.#precio * this.#cantidad;
+				}
+			}
+
+			Cesta.menuCesta();
+		</script>
+	</body>
+</html>
