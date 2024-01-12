@@ -6,17 +6,38 @@
 		<title>Tarea 1 Tema 10</title>
 	</head>
 	<body>
-        
-        <script>
-            function cargaTabla(){
-
-            }
-        </script>
-
-        <h1>Tarea 1 Tema 10</h1>
+		<h1>Tarea 1 Tema 10</h1>
 		<select name="seleccion" id="seleccion">
-			<option value="seleccion">Seleccione una persona</option>
+			<option value="seleccionDefault" disabled selected>
+				Seleccione una persona
+			</option>
 		</select>
-        <p>Aqui aparecerá la tabla.</p>
+		<p>Aqui aparecerá la tabla.</p>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				var seleccion = document.getElementById("seleccion");
+
+				seleccion.addEventListener("change", function () {
+					var idSelect = seleccion.value;
+
+					var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState == 4 && xhr.status == 200) {
+							var infoPersona = JSON.parse(xhr.responseText);
+							crearTabla(infoPersona);
+						}
+					};
+
+					xhr.open("GET", "tarea1Tema10.php?id=" + idSelect, true);
+					xhr.send();
+				});
+
+				function crearTabla(infoPersona){
+					
+
+				}
+			});
+		</script>
 	</body>
 </html>
