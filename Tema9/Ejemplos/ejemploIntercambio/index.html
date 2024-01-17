@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<h2>Recibe datos en JSON desde un servidor por PHP con AJAX.</h2>
+		<p id="demo"></p>
+		<script>
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					myObj = JSON.parse(this.responseText);
+					document.getElementById("demo").innerHTML = myObj.nombre;
+				}
+			};
+			xmlhttp.open("GET", "json1.php", true);
+			xmlhttp.send();
+		</script>
+	</body>
+</html>

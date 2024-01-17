@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        function cualEsMayor(){
+            var num1 = prompt("Introduzca un número");
+            var num2 = prompt("Introduzca otro número");
+            var x = Number(num1);
+            var y = Number(num2);
+            var mensaje = "";
+            
+            if( x == y ){
+                mensaje = "Los numeros valen lo mismo"
+            } else if (x > y){
+                mensaje = num1 + " es mayor que " + num2;
+            } else if (x < y) {
+                mensaje = num1 + " es menor que " + num2;
+            } else {
+                mensaje = "Introduzca valores correctos"
+            }
+            
+            alert(mensaje);
+        }
+    </script>
+    <body onload="cualEsMayor()"></body>
+</html>

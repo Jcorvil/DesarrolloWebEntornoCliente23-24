@@ -1,0 +1,19 @@
+<!--
+El siguiente ejemplo muestra cómo generar un error personalizado con throw y el uso de finally.
+-->
+
+<script>
+    var n = prompt("Introduzca un número : ");
+    try { 
+        if(n == "")  throw "está vacío";
+        if(isNaN(n)) throw "no es un número";
+        n = Number(n);
+        alert ("Se ha introducido el número: "+ n);
+    }
+    catch(err) {
+        alert ("El valor "+ err);
+    }
+    finally {
+        alert ("Siempre se ejecuta");
+    }
+</script>

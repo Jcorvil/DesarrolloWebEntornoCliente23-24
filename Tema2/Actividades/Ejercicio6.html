@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <script>
+    function conversor() {
+      var km = prompt("Introduzca un número en km/h");
+      var x = parseInt(km);
+      var metros = km * 1000 / 3600;
+
+      mensaje = km + " km/h corresponden a " + metros + " metros/segundo";
+      alert(mensaje);
+    }
+  </script>
+  <head> </head>
+  <body onload="conversor()"></body>
+</html>

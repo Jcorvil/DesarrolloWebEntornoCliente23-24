@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <script>
+        function calculoPrimas(){
+            var sueldo = Number(prompt("Introduzca el sueldo del empleado/a"));
+            var antiguedad = Number(prompt("Introduzca la antigüedad del emplado/a en años"))
+            var mensaje = "";
+
+            if (sueldo < 750 && antiguedad >= 10){
+                sueldo *= 1.10
+                mensaje = "El sueldo del empleado/a acabará siendo de " + sueldo + "€" 
+            } else if (sueldo >= 750 && antiguedad >= 10){
+                sueldo *= 1.05
+                mensaje = "El sueldo del empleado/a acabará siendo de " + sueldo + "€" 
+            } else if (antiguedad < 10){
+                mensaje = "La antigüedad del empleado/a no es superior a 10, no puede obtener una prima."
+            } else {
+                mensaje = "Alguno de los valores introducidos es erróneo."
+            }
+            alert(mensaje);
+
+        }
+    </script>
+    <body onload="calculoPrimas()"></body>
+</html>

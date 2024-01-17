@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+
+        <!--
+            1. No tenga moda
+            2. Solo se repita 1 número con respecto a los demás, el cual será la moda
+            3. Existen 2 modas: Si existe algun valor entre ellos → Ambos serían modas
+                                Si no existe ningún valor entre ellos → La moda será la media de ambos valores
+        -->
+
+        <script>
+            function mediaRangoModa() {
+                var datos = [];
+                var media = 0;
+                var rango = 0;
+                var moda = 0;
+
+                while (true) {
+                    var numArray = Number(
+                        prompt(
+                            "Introduzca valores enteros positivos. Para terminar, introduzca una letra."
+                        )
+                    );
+
+                    if (isNaN(numArray) || numArray === null) {
+                        calculoMedia(datos);
+                        calculoRango(datos);
+                        calculoModa(datos);
+                        break;
+                    } else if (numArray >= 0) {
+                        datos.push(numArray);
+                    } else if (numArray < 0 || numArray === float) {
+                        alert("Introduzca solo números enteros positivos");
+                    }
+                }
+            }
+
+            function calculoMedia(datos) {
+                var sumaMedia = 0;
+                for (var i = 0; i < datos.length; i++) {
+                    sumaMedia += datos[i];
+                }
+                media = sumaMedia / datos.length;
+                alert("La media de los números introducidos es " + media);
+            }
+
+            function calculoRango(datos) {
+                var numMenor = datos[0];
+                var numMayor = datos[0];
+
+                for (var i = 0; i < datos.length; i++) {
+                    if (datos[i] < numMenor) {
+                        numMenor = datos[i];
+                    }
+                    if (datos[i] > numMayor) {
+                        numMayor = datos[i];
+                    }
+                }
+                rango = numMayor - numMenor;
+                alert("El número mayor es " + numMayor);
+                alert("El número menor es " + numMenor);
+                alert("El rango de los números introducidos es " + rango);
+            }
+
+            function calculoModa(datos) {
+                var moda = [];
+                var frecuenciaMax = 0;
+
+                for (var i = 0; i < datos.length; i++) {
+                    var num = datos[i];
+                    var frecuencia = 0;
+
+                    for (var j = 0; j < datos.length; j++) {
+                        if (datos[j] == num) {
+                            frecuencia++;
+                        }
+                    }
+
+                    if (frecuencia > frecuenciaMax) {
+                        frecuenciaMax = frecuencia;
+                        moda = [num];
+                    } else if (
+                        frecuencia == frecuenciaMax &&
+                        moda.indexOf(num) == -1
+                    ) {
+                        moda.push(num);
+                    }
+                }
+
+                // Caso 1: No tiene moda
+                if (frecuenciaMax == 1) {
+                    console.log("No tiene moda");
+                    alert("No tiene moda");
+                }
+                // Caso 2: Tiene una moda y solo una
+                else if (moda.length == 1) {
+                    console.log("La moda es: " + moda);
+                    alert("La moda es: " + moda);
+                }
+            }
+        </script>
+    </head>
+    <body onload="mediaRangoModa()"></body>
+</html>

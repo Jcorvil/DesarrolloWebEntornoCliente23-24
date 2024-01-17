@@ -1,0 +1,118 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+header {
+	background-color: rgb(221, 121, 54);
+	color: #fff;
+	text-align: center;
+	gap: 15em;
+
+	display: flex;
+	align-items: center;
+}
+
+header img {
+	height: auto;
+	width: 15%;
+}
+
+main {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	gap: 20px;
+	padding: 20px;
+}
+
+.main__tabla--productos {
+	grid-column: 2/8;
+	margin-left: 50px;
+}
+
+.main__tabla--cesta {
+	grid-column: 8/12;
+}
+
+.table__totalPrecio {
+	border-top: 1px solid grey;
+	text-align: right;
+	height: 20%;
+}
+
+.table__totalIVA {
+	border: none;
+	text-align: right;
+	height: 20%;
+}
+
+.table__fotoProducto {
+	width: 60%;
+	height: auto;
+}
+
+.main__tabla--productos th {
+	border: 1px solid grey;
+}
+
+.main__tabla--productos td {
+	border: none;
+	text-align: center;
+}
+
+.main__tabla--cesta th {
+	padding: 1em;
+}
+
+.main__tabla--cesta img {
+	width: 15%;
+	height: auto;
+}
+
+.main__tabla--productos button {
+	background-color: cornflowerblue;
+	color: white;
+}
+
+#tbodyCesta button {
+	background-color: rgb(255, 69, 69);
+	padding: 10px;
+}
+
+.main__tabla--productos input {
+	background-color: aliceblue;
+}
+
+#tablaProductos {
+	grid-column: span 6;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 80px;
+}
+
+#totalPrecio,
+#totalIVA {
+	border: none;
+	background: none;
+	text-align: right;
+}
+
+#tbodyCesta {
+	text-align: center;
+}
+
+#tbodyCesta td {
+	border-top: 1px solid black;
+	border-top-style: dashed;
+}
+
+#tbodyCesta :nth-child(1) {
+	border-right: 1px solid black;
+	border-right-style: dashed;
+}
+
+#productoEnTabla input {
+	width: 30%;
+}

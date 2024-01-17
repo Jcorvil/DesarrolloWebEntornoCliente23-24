@@ -1,0 +1,25 @@
+<form id="formu">
+	Nombre: <input name="nombre" /><br />
+	Apellido: <input name="apellido" /><br />
+	<input type="submit" />
+</form>
+<div id="datos"></div>
+<script>
+	var formu = document.getElementById("formu");
+	formu.onsubmit = function (e) {
+		e.preventDefault(); // Para no enviar el formulario a otra página.
+		var solicitud = new XMLHttpRequest();
+		solicitud.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				let obj = JSON.parse(this.responseText);
+				document.getElementById(
+					"datos"
+				).innerHTML = `Desde servidor ${obj.nombre} de ${obj.ciudad}`;
+			}
+		};
+		solicitud.open("POST", "jsonPOST.php", true);
+		var formData = new FormData(document.getElementById("formu"));
+		formData.append("ciudad", "Ubrique"); // Campo añadido.
+		solicitud.send(formData);
+	};
+</script>
