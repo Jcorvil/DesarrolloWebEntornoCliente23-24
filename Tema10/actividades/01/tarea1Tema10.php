@@ -25,5 +25,5 @@ $pdost->execute();
 // Devuelve los datos
 $result = $pdost->fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($result);
-
+ 
 ?>
