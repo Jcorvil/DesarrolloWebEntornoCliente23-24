@@ -16,28 +16,40 @@
 
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
-				var seleccion = document.getElementById("seleccion");
-
-				seleccion.addEventListener("change", function () {
-					var idSelect = seleccion.value;
-
-					var xhr = new XMLHttpRequest();
-					xhr.onreadystatechange = function () {
-						if (xhr.readyState == 4 && xhr.status == 200) {
-							var infoPersona = JSON.parse(xhr.responseText);
-							crearTabla(infoPersona);
-						}
-					};
-
-					xhr.open("GET", "tarea1Tema10.php?id=" + idSelect, true);
-					xhr.send();
-				});
-
-				function crearTabla(infoPersona){
-					
-
-				}
+				mostrarSelect();
 			});
+
+			function funAjax(param, fun) {
+				var seleccion = document.getElementById("seleccion");
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						var infoPersona = JSON.parse(this.responseText);
+						fun(infoPersona);
+					}
+				};
+
+				xhr.open("GET", "tarea1Tema10.php?id=" + param, true);
+				xhr.send();
+			}
+
+			function mostrarSelect(infoPersona) {
+				var select = document.getElementById("seleccion");
+				select.addEventListener("change", function () {
+					funAjax(this.value, mostrarTabla);
+				});
+				opcion = document.createElement("option");
+				seleccion.appendChild(opcion);
+
+				for (var i = 0; i < infoPersona.length; i++) {
+					var selectOpcion = document.createElement("option");
+					selectOpcion.value = infoPersona[i].id;
+					selectOpcion.textContent = infoPersona[i].nombre;
+					select.appendChild(selectOpcion);
+				}
+			}
+
+			function mostrarTabla() {}
 		</script>
 	</body>
 </html>

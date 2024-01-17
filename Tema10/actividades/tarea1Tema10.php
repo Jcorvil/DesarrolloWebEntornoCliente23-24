@@ -1,34 +1,29 @@
 <?php
 
-function getDatos($id)
-{
-    try {
-        // Conexión con la BBDD
-        $conexion = new PDO('mysql:host=localhost;dbname=tema10', 'root', '');
-        // Sentencia para obtener todos los datos de la id
-        $sql = "SELECT * FROM datos";
-        if ($id != null) {
-            $sql .= " WHERE id = :id";
-        }
+// Conexión con la BBDD
+$conexion = new PDO('mysql:host=localhost;dbname=tema10', 'root', '');
 
-        $pdost = $conexion->prepare($sql);
-        // Bindeamos para evitar la inyección de código
-        $pdost->bindParam(':id', $id, PDO::PARAM_INT);
-        $pdost->setFetchMode(PDO::FETCH_ASSOC);
+$id = $_GET['id'] ?? null;
 
-        $pdost->execute();
+// Sentencia para obtener todos los datos de la id
+$sql = "SELECT * FROM datos";
 
-        //Devuelve los datos
-        $result = $pdost->fetchAll();
-        echo json_encode($result);
-
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
+// Si la id existe, añade la condición WHERE a la consulta
+if ($id != null) {
+  $sql .= " WHERE id = :id";
 }
-// Si la id existe, ejecuta la función y devuelve los datos
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    getDatos($id);
+
+$pdost = $conexion->prepare($sql);
+
+// Bindeamos para evitar la inyección de código
+if ($id != null) {
+  $pdost->bindParam(':id', $id, PDO::PARAM_INT);
 }
+
+$pdost->execute();
+
+// Devuelve los datos
+$result = $pdost->fetchAll(PDO::FETCH_ASSOC);
+echo json_encode($result);
+
 ?>
