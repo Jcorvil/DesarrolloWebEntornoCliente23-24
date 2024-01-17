@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tarea 1 Tema 10</title>
+	</head>
+	<body>
+		<h1>Tarea 1 Tema 10</h1>
+		<select name="seleccion" id="seleccion">
+			<option value="seleccionDefault" disabled selected>
+				Seleccione una persona
+			</option>
+		</select>
+		<p>Aqui aparecerá la tabla.</p>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				mostrarSelect();
+			});
+
+			function funAjax(param, fun) {
+				var seleccion = document.getElementById("seleccion");
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						var infoPersona = JSON.parse(this.responseText);
+						fun(infoPersona);
+					}
+				};
+
+				xhr.open("GET", "tarea1Tema10.php?id=" + param, true);
+				xhr.send();
+			}
+
+			function mostrarSelect(infoPersona) {
+				var select = document.getElementById("seleccion");
+				select.addEventListener("change", function () {
+					funAjax(this.value, mostrarTabla);
+				});
+				opcion = document.createElement("option");
+				seleccion.appendChild(opcion);
+
+				for (var i = 0; i < infoPersona.length; i++) {
+					var selectOpcion = document.createElement("option");
+					selectOpcion.value = infoPersona[i].id;
+					selectOpcion.textContent = infoPersona[i].nombre;
+					select.appendChild(selectOpcion);
+				}
+			}
+
+			function mostrarTabla() {}
+		</script>
+	</body>
+</html>
