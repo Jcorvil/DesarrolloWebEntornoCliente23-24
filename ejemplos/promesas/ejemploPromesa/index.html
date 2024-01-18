@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<script>
+		var promise = new Promise(function (resolve, reject) {
+			function hola() {
+				resolve("Hola mundo");
+			}
+			setTimeout(hola, 2000);
+			// reject("error");
+		});
+		promise
+			.then(function (mensaje) {
+				console.log(mensaje);
+			})
+			.catch(function (err) {
+				console.error("ERROR: " + err);
+			});
+	</script>
+	<body>
+		<p>Mira la consola</p>
+	</body>
+</html>

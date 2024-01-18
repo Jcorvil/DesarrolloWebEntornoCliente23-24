@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+
+	<script>
+		
+        // Imprimirá dato1, luego dato3 y al final dato2.
+        // Esto es porque dato2 se pone en un contador de 1 segundo de forma asíncrona, permitiendo que
+        // dato3 se imprima mientras se espera a dato2. Si no fuera de forma asíncrona, se esperaría 1 segundo
+        // a dato2 y luego se imprimirá dato3
+        console.log("dato1");
+		setTimeout(function fun1() {
+			console.log("dato2");
+		}, 1000);
+		console.log("dato3");
+	</script>
+
+	<body>
+		<p>Mira la consola</p>
+	</body>
+</html>

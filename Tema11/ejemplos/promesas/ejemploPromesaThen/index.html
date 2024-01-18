@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			fetch("carteras.json")
+				.then((result) => result.json())
+				.then((obJson) => console.log(obJson[0].nombre))
+				.catch((e) => console.log(`Error capturado:  ${e}`));
+		</script>
+	</body>
+</html>

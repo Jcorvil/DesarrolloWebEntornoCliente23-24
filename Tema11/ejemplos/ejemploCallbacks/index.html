@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<script>
+		setTimeout(function () {
+			console.log("Etapa 1 completada");
+			setTimeout(function () {
+				console.log("Etapa 2 completada");
+				setTimeout(function () {
+					console.log("Etapa 3 completada");
+					setTimeout(function () {
+						console.log("Etapa 4 completada");
+						// continuar indefinidamente ...
+					}, 3000);
+				}, 3000);
+			}, 3000);
+		}, 3000);
+	</script>
+	<body>
+		<p>Mira la consola</p>
+	</body>
+</html>
