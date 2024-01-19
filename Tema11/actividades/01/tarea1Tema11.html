@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tarea 1 Tema 11</title>
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Tarea 1 Tema 11</h1>
+		<select name="seleccion" id="seleccion">
+			<option value="seleccionDefault" disabled selected>
+				Seleccione una persona
+			</option>
+		</select>
+
+		<table id="tablaMostrar">
+			<p id="mensajeTabla">Aqui aparecerá la tabla.</p>
+		</table>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				funAjax("", mostrarSelect);
+			});
+
+			function funAjax(param, fun) {
+				fetch("tarea1Tema11.php?id=" + param)
+					.then((result) => result.json())
+					.then(function (obj) {
+						fun(obj);
+					})
+					.catch((e) => console.log(`Error capturado:  ${e}`));
+			}
+
+			function mostrarSelect(obj) {
+				var select = document.getElementById("seleccion");
+				select.addEventListener("change", function () {
+					funAjax(this.value, mostrarTabla);
+				});
+
+				for (var i = 0; i < obj.length; i++) {
+					var selectOpcion = document.createElement("option");
+					selectOpcion.value = obj[i].id;
+					selectOpcion.textContent = obj[i].nombre;
+					select.appendChild(selectOpcion);
+				}
+			}
+
+			function mostrarTabla(persona) {
+				var mensajeTabla = document.getElementById("mensajeTabla");
+				mensajeTabla.innerHTML = "";
+
+				var tabla = document.getElementById("tablaMostrar");
+				tabla.innerHTML = `
+							<tr><td><b>ID</b></td><td>${persona[0].id}</td></tr>
+							<tr><td><b>Nombre</b></td><td>${persona[0].nombre}</td></tr>
+							<tr><td><b>Apellidos</b></td><td>${persona[0].apellidos}</td></tr>
+							<tr><td><b>Ciudad</b></td><td>${persona[0].ciudad}</td></tr>
+						`;
+			}
+		</script>
+	</body>
+</html>

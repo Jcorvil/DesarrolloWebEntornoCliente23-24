@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+	<meta charset="UTF-8" />
+	<body>
+		<button type="button" onclick="funAjax ()">
+			Envía parámetros por POST y recibe valores
+		</button>
+		<div id="datos"></div>
+		<script>
+			function funAjax() {
+				var url = "jsonPOSTJson.php";
+				var data = { nombre: "Juan", ciudad: "Ubrique" }; // Como objeto
+				fetch(url, {
+					method: "POST", // or 'PUT' , que envía en lugar de parámetros, una cadena JSON.
+					body: JSON.stringify(data), // convierte a cadena JSON
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
+					.then((res) => res.json())
+					.then(function (obj) {
+						document.getElementById(
+							"datos"
+						).innerHTML = `Desde servidor ${obj.nombre} de ${obj.ciudad}`;
+					})
+					.catch((error) => console.error("Error:", error));
+			}
+		</script>
+	</body>
+</html>
