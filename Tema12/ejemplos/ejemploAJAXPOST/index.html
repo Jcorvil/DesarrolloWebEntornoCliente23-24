@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$("#demo").html("Hacer clic");
+				$("div").click(function () {
+					// Consulta AJAX a un archivo PHP por POST ------------------------------
+					$.post(
+						"jsonPOST.php",
+						{
+							nombre: "Juan",
+							ciudad: "Ubrique",
+						},
+						function (obj) {
+							obj = JSON.parse(obj);
+							$("#demo").html(`Desde servidor ${obj.nombre} de ${obj.ciudad}`);
+						}
+					);
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="demo"></div>
+	</body>
+</html>

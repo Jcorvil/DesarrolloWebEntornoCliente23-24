@@ -31,13 +31,28 @@
 				funAjax("", mostrarSelect);
 			});
 
-			function funAjax(param, fun) {
-				fetch("tarea1Tema11.php?id=" + param)
-					.then((result) => result.json())
-					.then(function (obj) {
-						fun(obj);
-					})
-					.catch((e) => console.log(`Error capturado:  ${e}`));
+			// ----------PROMESAS----------
+			
+			// function funAjax(param, fun) {
+			// 	fetch("tarea1Tema11.php?id=" + param)
+			// 		.then((result) => result.json())
+			// 		.then(function (obj) {
+			// 			fun(obj);
+			// 		})
+			// 		.catch((e) => console.log(`Error capturado:  ${e}`));
+			// }
+
+
+			// ----------ASYNC/AWAIT----------
+			
+			async function funAjax(param, fun) {
+				try {
+					const response = await fetch("tarea1Tema11.php?id=" + param);
+					const obJson = await response.json();
+					fun(obJson);
+				} catch (error) {
+					console.log(error.message);
+				}
 			}
 
 			function mostrarSelect(obj) {

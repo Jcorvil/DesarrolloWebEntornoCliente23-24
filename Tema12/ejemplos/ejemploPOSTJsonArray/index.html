@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			//Consulta AJAX Post, enviando cadena JSON, en este caso, un array.
+			$(function () {
+				$.post({
+					url: "jsonPOSTJsonArray.php",
+					data: JSON.stringify([
+						{ nombre: "Juan", ciudad: "Ubrique" },
+						{ nombre: "Juan1", ciudad: "Ubrique1" },
+					]),
+					contentType: "application/json",
+				})
+					.done(function (obj) {
+						obj = JSON.parse(obj);
+						$("#demo").html(
+							`Desde servidor ${obj[0].nombre} de ${obj[0].ciudad}`
+						);
+					})
+
+					.fail(function (jqXHR, textStatus) {
+						console.log(jqXHR.responseText); //Posible Error
+						console.log("Request failed: " + textStatus);
+					});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="demo"></div>
+	</body>
+</html>
