@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tarea 1 Tema 12</title>
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding: 5px;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<h1>Tarea 1 Tema 12</h1>
+		<select name="seleccion" id="seleccion">
+			<option value="seleccionDefault" disabled selected>
+				Seleccione una persona
+			</option>
+		</select>
+
+		<br />
+		<br />
+
+		<table id="tablaMostrar">
+			<p id="mensajeTabla">Aqui aparecerá la tabla.</p>
+		</table>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				funAjax("", mostrarSelect);
+			});
+
+			function funAjax(param, fun) {
+				// var seleccion = document.getElementById("seleccion");
+				// var xhttp = new XMLHttpRequest();
+				// xhttp.onreadystatechange = function () {
+				// 	if (this.readyState == 4 && this.status == 200) {
+				// 		var infoPersona = JSON.parse(this.responseText);
+				// 		fun(infoPersona);
+				// 	}
+				// };
+
+				// xhttp.open("GET", "tarea1Tema12.php?id=" + param, true);
+				// xhttp.send();
+				$.ajax({
+					url: "tarea1Tema12.php?id=" + param,
+					success: function (obj) {
+						var infoPersona = JSON.parse(obj);
+						fun(infoPersona);
+					},
+				});
+			}
+
+			function mostrarSelect(infoPersona) {
+				// var select = document.getElementById("seleccion");
+				// select.addEventListener("change", function () {
+				// 	funAjax(this.value, mostrarTabla);
+				// });
+
+				// Llamada de mostrar tabla al seleccionar los nombres
+				$("#seleccion").on("change", function () {
+					funAjax(this.value, mostrarTabla);
+				});
+
+				// for (var i = 0; i < infoPersona.length; i++) {
+				// 	var selectOpcion = document.createElement("option");
+				// 	selectOpcion.value = infoPersona[i].id;
+				// 	selectOpcion.textContent = infoPersona[i].nombre;
+				// 	select.appendChild(selectOpcion);
+				// }
+
+				// Mostrar los nombres en la lista select
+				$.each(infoPersona, function (index, persona) {
+					$("#seleccion").append(new Option(persona.nombre, persona.id));
+				});
+			}
+
+			function mostrarTabla(persona) {
+				// var mensajeTabla = document.getElementById("mensajeTabla");
+				// mensajeTabla.innerHTML = "";
+
+				// Se oculta el mensaje de la tabla
+				$("#mensajeTabla").remove();
+
+				// var tabla = document.getElementById("tablaMostrar");
+				// tabla.innerHTML = `
+				// 			<tr><td><b>ID</b></td><td>${persona[0].id}</td></tr>
+				// 			<tr><td><b>Nombre</b></td><td>${persona[0].nombre}</td></tr>
+				// 			<tr><td><b>Apellidos</b></td><td>${persona[0].apellidos}</td></tr>
+				// 			<tr><td><b>Ciudad</b></td><td>${persona[0].ciudad}</td></tr>
+				// 		`;
+
+				var tabla = $("#tablaMostrar");
+				tabla.empty();
+
+				tabla.append(`
+								<tr><td><b>ID</b></td><td>${persona[0].id}</td></tr>
+								<tr><td><b>Nombre</b></td><td>${persona[0].nombre}</td></tr>
+								<tr><td><b>Apellidos</b></td><td>${persona[0].apellidos}</td></tr>
+								<tr><td><b>Ciudad</b></td><td>${persona[0].ciudad}</td></tr>
+							`);
+			}
+		</script>
+	</body>
+</html>
