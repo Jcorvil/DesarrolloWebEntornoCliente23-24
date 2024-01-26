@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			$(function () {
+				function funAjax(e) {
+					e.preventDefault(); // Para no abandonar la página al enviar formulario.
+
+					var marca = $("#marca").val();
+					var modelo = $("#modelo").val();
+					var data = { marca: marca, modelo: modelo };
+
+					// //--------- Ajax con Promesas -----------------------------------------
+					// fetch("examenMockup.php", {
+					// 	method: "POST",
+					// 	headers: {
+					// 		"Content-Type": "application/json",
+					// 	},
+					// 	body: JSON.stringify({ marca: marca, modelo: modelo }),
+					// })
+					// 	.then((response) => response.json())
+					// 	.then((data) => {
+					// 		$("#datos").html(
+					// 			"<h1>El coche es un " + data.marca + " " + data.modelo + "</h1>"
+					// 		);
+					// 	})
+					// 	.catch((error) => console.error("Error:", error));
+					//----------------------------------------------------------------------
+
+					// ---------Ajax con jQuery---------------------------------------------
+					$.ajax({
+						url: "examenMockup.php",
+						method: "POST",
+						data: { marca: marca, modelo: modelo },
+						success: function (data) {
+							data = JSON.parse(data);
+							$("#datos").html(
+								"<h1>El coche es un " + data.marca + " " + data.modelo + "</h1>"
+							);
+						},
+					});
+
+					//----------------------------------------------------------------------
+				}
+				$("form").submit(funAjax);
+			});
+		</script>
+	</head>
+	<body>
+		<form>
+			<label>Marca:</label><input type="text" id="marca" required="required" />
+			<label>Modelo:</label
+			><input type="text" id="modelo" required="required" />
+			<button type="submit">Enviar</button>
+		</form>
+		<div id="datos"></div>
+	</body>
+</html>

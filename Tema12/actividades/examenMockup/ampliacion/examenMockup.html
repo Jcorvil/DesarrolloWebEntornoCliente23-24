@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding: 5px;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			$(function () {
+				$("#tablaDatos").hide();
+
+				function funAjax(e) {
+					e.preventDefault(); // Para no abandonar la página al enviar formulario.
+
+					var marca = $("#marca").val();
+					var modelo = $("#modelo").val();
+					var data = { marca: marca, modelo: modelo };
+
+					// //--------- Ajax con Promesas -----------------------------------------
+					// fetch("examenMockup.php", {
+					// 	method: "POST",
+					// 	headers: {
+					// 		"Content-Type": "application/json",
+					// 	},
+					// 	body: JSON.stringify({ marca: marca, modelo: modelo }),
+					// })
+					// 	.then((response) => response.json())
+					// 	.then((data) => {
+					// 		$("#datos").html(
+					// 			"<h1>El coche es un " + data.marca + " " + data.modelo + "</h1>"
+					// 		);
+
+					// 		// ----------AMPLIACIÓN----------
+					// 		var tabla = $("#tablaDatos");
+					// 		$("#tablaDatos").show();
+
+					// 		var datosCoche = `<tr><td>${data.marca}</td><td>${data.modelo}</td></tr>`;
+					// 		$("#contenidoTabla").append(datosCoche);
+					// 	})
+					// 	.catch((error) => console.error("Error:", error));
+					//----------------------------------------------------------------------
+
+					// ---------Ajax con jQuery---------------------------------------------
+					$.ajax({
+						url: "examenMockup.php",
+						method: "POST",
+						data: { marca: marca, modelo: modelo },
+						success: function (data) {
+							data = JSON.parse(data);
+
+							$("#datos").html(
+								"<h1>El coche es un " + data.marca + " " + data.modelo + "</h1>"
+							);
+
+							// ----------AMPLIACIÓN----------
+							var tabla = $("#tablaDatos");
+							$("#tablaDatos").show();
+
+							var datosCoche = `<tr><td>${data.marca}</td><td>${data.modelo}</td></tr>`;
+							$("#contenidoTabla").append(datosCoche);
+						},
+					});
+
+					//----------------------------------------------------------------------
+				}
+				$("form").submit(funAjax);
+			});
+		</script>
+	</head>
+	<body>
+		<form>
+			<label>Marca:</label><input type="text" id="marca" required="required" />
+			<label>Modelo:</label
+			><input type="text" id="modelo" required="required" />
+			<button type="submit">Enviar</button>
+		</form>
+		<div id="datos"></div>
+		<table id="tablaDatos">
+			<tr>
+				<th><b>Marca</b></th>
+				<th><b>Modelo</b></th>
+			</tr>
+			<tbody id="contenidoTabla"></tbody>
+		</table>
+	</body>
+</html>
