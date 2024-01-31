@@ -1,0 +1,33 @@
+<!-- Dado un json cuyo contenido es un array de objetos, vamos a realizar un renderizado del contenido a través de una peitición ajax:
+1- Con promesas
+2- Con métodos de jquery
+
+Se renderizará una tabla respetando las columnas según los campos.
+Por otro lado, calculadremos el total de los costes de cada cartera.-->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script defer>
+			window.onload = function () {
+				funAjax();
+			};
+
+			fetch("carteras.json")
+				.then((response) => response.json())
+				.then((data) => {
+					$("#tablaCarteras").html(
+						
+					);
+				})
+				.catch((error) => console.error("Error:", error));
+		</script>
+	</head>
+	<body>
+		<table id="tablaCarteras"></table>
+	</body>
+</html>
