@@ -11,20 +11,95 @@ Por otro lado, calculadremos el total de los costes de cada cartera.-->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<style>
+			table {
+				border: 1px solid black;
+
+				td {
+					border: 1px solid black;
+					padding: 5px;
+				}
+
+				thead {
+					background-color: #72962f;
+				}
+			}
+
+			.infoCartera {
+				background-color: #e8ffbd;
+			}
+		</style>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script defer>
-			window.onload = function () {
-				funAjax();
-			};
+			// ----------PROMESA----------
+			function datosJson() {
+				return fetch("carteras.json")
+					.then((data) => data.json())
+					.catch((e) => console.log(`Error capturado:  ${e}`));
+			}
 
-			fetch("carteras.json")
-				.then((response) => response.json())
-				.then((data) => {
-					$("#tablaCarteras").html(
-						
+			// ----------JQUERY----------
+			// function datosJson(callback) {
+			// 	$.getJSON("carteras.json", function (data) {
+			// 		callback(data);
+			// 	});
+			// }
+
+			// Cálculo de los costes
+			function sumaCostes(costes) {
+				let total = 0;
+				for (let i = 0; i < costes.length; i++) {
+					total += cartera.costes[i];
+				}
+				return total;
+			}
+
+			function mostrarTabla(datos) {
+				// Cabecera
+				$("#tablaCarteras").append(
+					`<thead><tr><td><b>ID</b></td><td><b>NOMBRE</b></td><td><b>COSTE €</b></td></tr></thead>`
+				);
+
+				// Cuerpo
+				let tbody = $("<tbody></tbody>");
+				let totalGeneral = 0;
+
+				datos.forEach((cartera) => {
+					// Muestra el nombre de la cartera una vez
+					tbody.append(
+						`<tr class="infoCartera"><td><b>${cartera.id}</b></td><td><b>${cartera.nombre}</b></td><td></td></tr>`
 					);
-				})
-				.catch((error) => console.error("Error:", error));
+
+					// Iterar a través de las propiedades de costes
+					for (let elemento in cartera.costes) {
+						let precio = cartera.costes[elemento];
+						tbody.append(
+							`<tr><td>${
+								cartera.id
+							}</td><td>${elemento}</td><td>${precio.toFixed(2)}</td></tr>`
+						);
+
+						totalGeneral += precio;
+					}
+				});
+
+				// Fila de total
+				tbody.append(
+					`<tr><td colspan="2"><b>TOTAL</b></td><td>${totalGeneral.toFixed(
+						2
+					)}</td></tr>`
+				);
+
+				$("#tablaCarteras").append(tbody);
+			}
+
+			// Con promesas
+			datosJson().then((data) => mostrarTabla(data));
+
+			// Con métodos de jQuery
+			// datosJson(function (data) {
+			//     mostrarTabla(data);
+			// });
 		</script>
 	</head>
 	<body>
