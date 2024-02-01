@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th,
+			td {
+				padding: 5px;
+			}
+		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			$(function () {
+				function funAjax(e) {
+					e.preventDefault(); // Para no abandonar la página al enviar formulario.
+
+					//--------- Con Promesas--------------------------------------------------------
+
+					fetch("examen.php", {
+						method: "POST",
+						body: JSON.stringify({
+							// Obtiene los valores introducidos en los input
+							equipo1: $("#equipo1").val(),
+							equipo2: $("#equipo2").val(),
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => {
+							// Asumiendo que todos los equipos tienen siempre la misma cantidad de alumnos (4)
+							// Recorre el array obtenido e imprime el primer alumno del primer equipo, luego
+							// el primer alumno del segundo equipo, luego el segundo alumno del primer equipo, etc.
+							for (var i = 0; i < 4; i++) {
+								var filaDatos =
+									"<tr><td>" +
+									data.equipo1[i] +
+									"</td><td>" +
+									data.equipo2[i] +
+									"</td></tr>";
+
+								// Mete la fila con los datos obtenidos del bucle en el cuerpo de la tabla con id "datos"
+								$("#datos").append(filaDatos);
+							}
+						})
+						.catch((error) => console.error("Error:", error));
+
+					//-------------------------------------------------------------------------------
+
+					// // -------Con jQuery----------------------------------------------------------
+
+					// $.ajax({
+					// 	url: "examen.php",
+					// 	method: "POST",
+					// 	data: {
+					// 		// Obtiene los valores introducidos en los input
+					// 		equipo1: $("#equipo1").val(),
+					// 		equipo2: $("#equipo2").val(),
+					// 	},
+					// 	success: function (data) {
+					// 		data = JSON.parse(data);
+					// 		// Asumiendo que todos los equipos tienen siempre la misma cantidad de alumnos (4)
+					// 		// Recorre el array obtenido e imprime el primer alumno del primer equipo, luego
+					// 		// el primer alumno del segundo equipo, luego el segundo alumno del primer equipo, etc.
+					// 		for (var i = 0; i < 4; i++) {
+					// 			var filaDatos =
+					// 				"<tr><td>" +
+					// 				data.equipo1[i] +
+					// 				"</td><td>" +
+					// 				data.equipo2[i] +
+					// 				"</td></tr>";
+
+					// 			// Mete la fila con los datos obtenidos del bucle en el cuerpo de la tabla con id "datos"
+					// 			$("#datos").append(filaDatos);
+					// 		}
+					// 	},
+					// });
+
+					// //----------------------------------------------------------------------------
+				}
+				$("form").submit(funAjax);
+			});
+		</script>
+	</head>
+	<body>
+		<form>
+			<label>ID_Equipo1:</label
+			><input type="number" min="1" id="equipo1" required="required" />
+			<label>ID_Equipo2:</label
+			><input type="number" min="1" id="equipo2" required="required" />
+			<button type="submit">Enviar</button>
+		</form>
+		<br />
+
+		<table>
+			<thead>
+				<tr>
+					<th>Equipo1</th>
+					<th>Equipo2</th>
+				</tr>
+			</thead>
+			<tbody id="datos"></tbody>
+		</table>
+	</body>
+</html>
