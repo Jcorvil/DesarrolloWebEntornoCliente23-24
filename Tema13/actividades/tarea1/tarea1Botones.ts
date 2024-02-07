@@ -4,9 +4,12 @@ interface GenBotones {
 }
 
 
-// Crea los botones
 class Boton {
-    constructor() { }
+    constructor(private contador: number) {
+        $('<button/>').text(+ this.contador).on('click', () => {
+            alert("Hola desde " + this.contador);
+        }).appendTo('body');
+    }
 }
 
 class GrupoBot implements GenBotones {
@@ -14,11 +17,26 @@ class GrupoBot implements GenBotones {
 
     add(): void {
         this.contador++;
-        new Boton;
+        new Boton(this.contador);
     }
 
     rest(): void {
-
+        if (this.contador > 0) {
+            $('body').children().last().remove();
+            this.contador--;
+        }
     }
-
 }
+
+
+let grupoBotones = new GrupoBot();
+
+$(function () {
+    $('#bot1').on('click', () => {
+        grupoBotones.add();
+    });
+
+    $('#bot2').on('click', () => {
+        grupoBotones.rest();
+    });
+});
