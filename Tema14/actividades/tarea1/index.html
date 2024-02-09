@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body {
+				color: black;
+				font-family: Verdana, Geneva, Tahoma, sans-serif;
+				font-size: 1.5em;
+				text-align: center;
+				padding: 1em;
+				margin: 0;
+			}
+		</style>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				document
+					.getElementById("botonMensaje")
+					.addEventListener("click", function () {
+						fetch("/json")
+							.then((response) => response.json())
+							.then((data) => {
+								document.getElementById(
+									"contMensaje"
+								).textContent = `Hola ${data.nombre}`;
+							})
+							.catch((error) => {
+								console.error("Error: ", error);
+							});
+					});
+			});
+		</script>
+	</head>
+	<body>
+		<h1>Index.html leído</h1>
+		<button id="botonMensaje">Púlsame</button>
+		<p id="contMensaje"></p>
+	</body>
+</html>
