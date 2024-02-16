@@ -6,10 +6,11 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "",
+	"author": "jcorvil600",
 	"license": "ISC",
 	"type": "module",
 	"dependencies": {
+		"express": "^4.18.2",
 		"mongodb": "^6.3.0"
 	}
 }

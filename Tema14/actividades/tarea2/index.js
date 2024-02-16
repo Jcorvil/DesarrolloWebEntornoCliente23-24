@@ -1,44 +1,58 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+document.addEventListener("DOMContentLoaded", () => {
+	let nombreInput = document.getElementById("nombreInput");
+	let apellidoInput = document.getElementById("apellidoInput");
+	let enviarBtn = document.getElementById("enviarBtn");
+	let cuerpoTabla = document.getElementById("cuerpoTabla");
 
-const uri =
-	"mongodb+srv://jcorvil600:bVjd65W6G6OAc9PH@cluster0.xe4vdla.mongodb.net/?retryWrites=true&w=majority";
+	let obtenerDocumentos = async () => {
+		let response = await fetch("/mostrarDatos");
+		let documentos = await response.json();
+		actualizarTabla(documentos);
+	};
 
-const client = new MongoClient(uri, {
-	serverApi: {
-		version: ServerApiVersion.v1,
-		strict: true,
-		deprecationErrors: true,
-	},
-});
-
-async function run() {
-	try {
-		await client.connect();
-		await client.db("admin").command({ ping: 1 });
-		console.log(
-			"Pinged your deployment. You successfully connected to MongoDB!"
-		);
-
-		const database = client.db("Tema14");
-		const coleccion = database.collection("Tarea2");
-
-		coleccion.insertOne(
-			{
-				nombre: document.getElementById("nombreInput").value,
-				apellido: document.getElementById("apellidoInput").value,
-			},
-			(err, res) => {
-				if (err) {
-					console.log(err);
-				} else {
-					console.log(res);
-					console.log("Documento insertado");
-					document.getElementById("form").reset();
-				}
+	// enviarDocumento obtiene los datos introducidos (que se encuentran en addDatos) y luego
+	// los envía al método actualizarTabla para mostrarlos.
+	let enviarDocumento = async () => {
+		let nombre = nombreInput.value;
+		let apellido = apellidoInput.value;
+		if (nombre && apellido) {
+			try {
+				await fetch("/addDatos", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ nombre, apellido }),
+				});
+				nombreInput.value = "";
+				apellidoInput.value = "";
+				obtenerDocumentos();
+			} catch (error) {
+				console.error("Error al enviar documento:", error);
 			}
-		);
-	} finally {
-		await client.close();
-	}
-}
-run().catch(console.dir);
+		} else {
+			alert("Por favor, complete ambos campos.");
+		}
+	};
+
+	// Obtiene los datos de la base de datos junto con los nuevos datos introducidos por los input de
+	// nombre y apellido, luego recorre todos los datos y los muestra en la tabla uno a uno.
+	let actualizarTabla = (documentos) => {
+		cuerpoTabla.innerHTML = "";
+		documentos.forEach((documento) => {
+			let fila = document.createElement("tr");
+			let nombreCelda = document.createElement("td");
+			let apellidoCelda = document.createElement("td");
+			nombreCelda.textContent = documento.nombre;
+			apellidoCelda.textContent = documento.apellido;
+			fila.appendChild(nombreCelda);
+			fila.appendChild(apellidoCelda);
+			cuerpoTabla.appendChild(fila);
+		});
+	};
+
+	// Al enviar los datos por los input, se activa "enviarDocumento"
+	enviarBtn.addEventListener("click", enviarDocumento);
+
+	obtenerDocumentos();
+});
