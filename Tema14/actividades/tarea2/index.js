@@ -4,15 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
 	let enviarBtn = document.getElementById("enviarBtn");
 	let cuerpoTabla = document.getElementById("cuerpoTabla");
 
-	let obtenerDocumentos = async () => {
+	async function obtenerDocumentos() {
 		let response = await fetch("/mostrarDatos");
 		let documentos = await response.json();
 		actualizarTabla(documentos);
-	};
+	}
 
 	// enviarDocumento obtiene los datos introducidos (que se encuentran en addDatos) y luego
 	// los envía al método actualizarTabla para mostrarlos.
-	let enviarDocumento = async () => {
+	async function enviarDocumento() {
 		let nombre = nombreInput.value;
 		let apellido = apellidoInput.value;
 		if (nombre && apellido) {
@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		} else {
 			alert("Por favor, complete ambos campos.");
 		}
-	};
+	}
 
 	// Obtiene los datos de la base de datos junto con los nuevos datos introducidos por los input de
 	// nombre y apellido, luego recorre todos los datos y los muestra en la tabla uno a uno.
-	let actualizarTabla = (documentos) => {
+	async function actualizarTabla(documentos) {
 		cuerpoTabla.innerHTML = "";
 		documentos.forEach((documento) => {
 			let fila = document.createElement("tr");
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			fila.appendChild(apellidoCelda);
 			cuerpoTabla.appendChild(fila);
 		});
-	};
+	}
 
 	// Al enviar los datos por los input, se activa "enviarDocumento"
 	enviarBtn.addEventListener("click", enviarDocumento);
