@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="header">
+    <h2>Componente Calculadora</h2>
+  </div>
+
+  <div class="grid">
+    <div class="row">
+      <div class="col-6">
+        <div class="operation">
+          <div class="row">
+            <div class="col-12">
+              <input
+                type="number"
+                [(ngModel)]="number1"
+                name=""
+                placeholder="number"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <input
+                type="number"
+                [(ngModel)]="number2"
+                name=""
+                placeholder="number"
+              />
+            </div>
+          </div>
+          <div>
+            <button (click)="suma()" class="button">Suma</button>
+          </div>
+        </div>
+      </div>
+      <div class="result">
+        <span> Resultado : {{ resultado }} </span>
+      </div>
+    </div>
+  </div>
+</div>
