@@ -1,0 +1,25 @@
+.tarjetaProducto {
+  max-width: 30vw;
+  max-height: 80vh;
+
+  img {
+    width: 50%;
+  }
+}
+
+#botones {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#buttonAnnadir,
+#buttonQuitar {
+  background-color: rgb(141, 141, 250);
+  border-radius: 50px;
+  width: 30%;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: space-around;
+}
