@@ -1,9 +1,12 @@
 .tarjetaProducto {
-  max-width: 30vw;
-  max-height: 80vh;
+  padding: 2em;
+  width: 80%;
+  min-height: 80%;
 
   img {
-    width: 50%;
+    max-width: 200px;
+    max-height: 200px;
+    margin: auto;
   }
 }
 
@@ -12,14 +15,16 @@
   justify-content: space-evenly;
 }
 
-#buttonAnnadir,
-#buttonQuitar {
-  background-color: rgb(141, 141, 250);
-  border-radius: 50px;
-  width: 30%;
+#buttonAnnadir:hover,
+#buttonQuitar:hover {
+  background-color: rgb(98, 123, 179);
+  color: white;
+  transition: 0.3s;
 }
 
-mat-card-header {
+mat-card-header,
+mat-card-content {
   display: flex;
   justify-content: space-around;
+  padding: 2em;
 }
