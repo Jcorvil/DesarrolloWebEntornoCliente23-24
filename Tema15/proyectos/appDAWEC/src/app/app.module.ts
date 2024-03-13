@@ -8,6 +8,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
+import { MatButtonModule } from '@angular/material/button';
 
 // components
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -16,6 +17,13 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
+import { ProductosComponent } from './productos/productos.component';
+import { ContactoComponent } from './contacto/contacto.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+
 // routing
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,6 +31,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './shared/services/auth.service';
 import { ReadWriteDataComponent } from './components/read-write-data/read-write-data.component';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenuComponent } from './menu/menu.component';
+
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -34,6 +46,10 @@ import { FormsModule } from '@angular/forms';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     ReadWriteDataComponent,
+    MenuComponent,
+    ProductosComponent,
+    ContactoComponent,
+    PagenotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,10 +59,15 @@ import { FormsModule } from '@angular/forms';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatGridListModule,
+    MatButtonModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],
 })
 
-export class AppModule {}
+export class AppModule { }

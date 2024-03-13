@@ -1,8 +1,19 @@
-<p *ngFor="let item of products">{{item.payload.doc.id}},{{item.payload.doc.data().name}}</p> 
 
 <p>Name:</p>
-<input type="string"  [(ngModel)]="name">
+<input type="string" [(ngModel)]="name" />
 <p>Precio:</p>
-<input type="number"  [(ngModel)]="price">
+<input type="number" [(ngModel)]="price" />
 
 <button (click)="write()">Add</button>
+
+<mat-grid-list cols="4" rowHeight="2:2" *ngFor="let item of products">
+  <mat-grid-tile>
+    <mat-card class="tarjetaProducto">
+      <mat-card-header>
+        <mat-card-title> {{ item.payload.doc.data().name }}</mat-card-title>
+        <mat-card-title>{{ item.payload.doc.data().price }} €</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image src="{{ item.payload.doc.data().img }}" alt="Imagen del producto" />
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
